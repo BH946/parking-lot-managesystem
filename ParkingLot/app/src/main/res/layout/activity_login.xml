@@ -40,6 +40,7 @@
             android:textColor="#FFFFFF" />
 
         <EditText
+            android:id="@+id/eID"
             android:layout_width="308dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
@@ -60,6 +61,7 @@
             android:textColor="#FFFFFF" />
 
         <EditText
+            android:id="@+id/ePW"
             android:layout_width="308dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
@@ -69,6 +71,7 @@
 
 
     <android.widget.Button
+        android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/btn_login"
@@ -104,6 +107,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="맵 확인용"/>
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회원가입 테스트용"/>
 
 
 </LinearLayout>

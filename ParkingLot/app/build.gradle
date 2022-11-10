@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -13,7 +14,7 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true // mutliDex error 해결
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -45,4 +46,9 @@ dependencies {
     // naver map sdk(api)
     implementation 'com.naver.maps:map-sdk:3.15.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    // multiDex error 해결
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
