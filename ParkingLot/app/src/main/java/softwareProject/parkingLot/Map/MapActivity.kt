@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import com.naver.maps.geometry.LatLng
@@ -12,7 +11,11 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
-import softwareProject.parkingLot.Login.LoginActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import softwareProject.parkingLot.R
 import softwareProject.parkingLot.User.ReservationActivity
 
@@ -41,14 +44,34 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        // api test
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.odcloud.kr/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
+        val parkingService = retrofit.create(ParkingService::class.java)
+        parkingService.getParkingLocation("${R.string.parking_location_key}",
+        1,2,"26380")
+            .enqueue(object: Callback<ParkingDto> {
+                override fun onResponse(call: Call<ParkingDto>, response: Response<ParkingDto>) {
+                    // success
+                    if(!response.isSuccessful){
+                        Log.d("MapActivity","실패")
+                        Log.d("MapActivity", response.toString())
+                        return
+                    }
+                    response.body()?.let{
+                        Log.d("MapActivity",it.toString())
+                    }
+                }
 
-        // 주차장 api test
-        val key = "noPG7qG7dO3ftTu%2FrjrDZxXLyQ3EwSpIUGmkLTfbCleCIgtBkt2GQFv%2BbcGhS%2F%2B65IKs4pdQ0VqWlRrDiDVmpw%3D%3D"
-        val page = "&page=1"
-        val perPage = "&perPage=10"
-        val cond = "&cond=26380"
-        val url = ""
+                override fun onFailure(call: Call<ParkingDto>, t: Throwable) {
+                    // fail
+                }
+
+            })
+
 
     }
 
@@ -74,7 +97,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         // 1. 주차장 데이터 오픈 api 찾아서 데이터 가공
         Log.d("api", "데이터 확인")
         // 사하구청 : 26380
-
 
 
 

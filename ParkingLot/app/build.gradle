@@ -51,4 +51,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.1.0'
     // multiDex error 해결
     implementation 'androidx.multidex:multidex:2.0.1'
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
