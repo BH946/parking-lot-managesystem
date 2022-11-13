@@ -27,14 +27,40 @@
                 android:layout_height="wrap_content"
                 android:text="11월 9일 (수)"
                 android:layout_alignParentLeft="true"
-                android:textSize="20dp"/>
+                android:layout_centerVertical="true"
+                android:textSize="20dp"
+                android:padding="5dp"/>
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="~"
+                android:textSize="50dp"/>
+            <TextView
+                android:id="@+id/selectDate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="11월 9일 (목)"
                 android:layout_alignParentRight="true"
-                android:textSize="20dp"/>
+                android:layout_centerVertical="true"
+                android:textSize="20dp"
+                android:padding="5dp"/>
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <CalendarView
+                android:id="@+id/calView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <CalendarView
+                android:id="@+id/calView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
