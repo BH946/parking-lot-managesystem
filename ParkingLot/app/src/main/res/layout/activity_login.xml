@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".Login.LoginActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="L 0 G I N"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="172dp"
+        android:layout_gravity="center"
+        android:src="@drawable/logo3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="ID "
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
+
+        <EditText
+            android:id="@+id/eID"
+            android:layout_width="308dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#cf6679"
+            android:hint="ID"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="PW "
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
+
+        <EditText
+            android:id="@+id/ePW"
+            android:layout_width="308dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#cf6679"
+            android:hint="PW"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+
+    <android.widget.Button
+        android:id="@+id/btn3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_login"
+        android:text="로그인"
+        android:textColor="#ffffff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_width="189dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:text="회원가입 "
+            android:id="@+id/sign_up"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="185dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:text="관리자 모드"
+            android:id="@+id/manager_mode"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="맵 확인용"/>
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회원가입 테스트용"/>
+
+
+</LinearLayout>
