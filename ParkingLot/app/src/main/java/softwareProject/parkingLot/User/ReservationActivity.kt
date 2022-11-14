@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import softwareProject.parkingLot.R
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.Calendar.*
 
 class ReservationActivity : AppCompatActivity() {
 
@@ -79,10 +79,18 @@ class ReservationActivity : AppCompatActivity() {
         })
 
         calView1.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            selectDate1.setText("${month}월 ${dayOfMonth}일 (월)")
+            val cal:Calendar = Calendar.getInstance()
+            cal.set(year,month,dayOfMonth)
+            val day: String = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+
+            selectDate1.setText("${month+1}월 ${dayOfMonth}일 (${day})")
         }
         calView2.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            selectDate2.setText("${month}월 ${dayOfMonth}일 (월)")
+            val cal:Calendar = Calendar.getInstance()
+            cal.set(year,month,dayOfMonth)
+            val day: String = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+            selectDate2.setText("${month+1}월 ${dayOfMonth}일 (${day})")
+
         }
     }
     fun setViewId(){
@@ -93,7 +101,6 @@ class ReservationActivity : AppCompatActivity() {
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun calViewInit(){
-        calView1.visibility = View.GONE
         calView2.visibility = View.GONE
 
         var current=LocalDateTime.now()
