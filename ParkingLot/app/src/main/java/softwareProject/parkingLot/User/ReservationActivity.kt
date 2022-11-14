@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CalendarView
 import android.widget.TextView
+import android.widget.TimePicker
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import okhttp3.internal.Internal.instance
 import softwareProject.parkingLot.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -16,98 +18,84 @@ import java.util.Calendar.*
 
 class ReservationActivity : AppCompatActivity() {
 
-    lateinit var selectDate1: TextView
-    lateinit var selectDate2: TextView
-    lateinit var calView1: CalendarView
-    lateinit var calView2: CalendarView
+    lateinit var selectDate: TextView
+    lateinit var selectTime: TextView
+    lateinit var calView: CalendarView
+    lateinit var timePicker: TimePicker
 
-    var selectYear1: Int = 0
-    var selectMonth1: Int = 0
-    var selectDay1: Int = 0
-    var selectYear2: Int = 0
-    var selectMonth2: Int = 0
-    var selectDay2: Int = 0
-
-    var cal1_already_ON = false
-    var cal2_already_ON = false
+    var cal_already_ON = false
+    var tPicker_already_ON = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservation)
+        title = "예약등록"
 
         setViewId()
-        calViewInit()
+        viewInit()
 
-        selectDate1.setOnClickListener(View.OnClickListener {
-            calView2.visibility = View.GONE
-            cal2_already_ON = false
-
-            selectDate2.setTypeface(null, Typeface.NORMAL)
-            selectDate2.setBackgroundResource(R.drawable.button_click_off)
-
-            if (cal1_already_ON) {
-                selectDate1.setTypeface(null, Typeface.NORMAL)
-                selectDate1.setBackgroundResource(R.drawable.button_click_off)
-                calView1.visibility = View.GONE
-                cal1_already_ON = false
+        selectDate.setOnClickListener(View.OnClickListener {
+            if (cal_already_ON) {
+                selectDate.setTypeface(null, Typeface.NORMAL)
+                selectDate.setBackgroundResource(R.drawable.button_click_off)
+                calView.visibility = View.GONE
+                cal_already_ON = false
             } else {
-                selectDate1.setTypeface(null, Typeface.BOLD)
-                selectDate1.setBackgroundResource(R.drawable.button_click_on)
-                calView1.visibility = View.VISIBLE
-                cal1_already_ON = true
+                selectDate.setTypeface(null, Typeface.BOLD)
+                selectDate.setBackgroundResource(R.drawable.button_click_on)
+                calView.visibility = View.VISIBLE
+                cal_already_ON = true
             }
         })
-        selectDate2.setOnClickListener(View.OnClickListener {
-            calView1.visibility = View.GONE
-            cal1_already_ON = false
-            selectDate1.setTypeface(null, Typeface.NORMAL)
-            selectDate1.setBackgroundResource(R.drawable.button_click_off)
-
-
-            if (cal2_already_ON) {
-                selectDate2.setTypeface(null, Typeface.NORMAL)
-                selectDate2.setBackgroundResource(R.drawable.button_click_off)
-                calView2.visibility = View.GONE
-                cal2_already_ON = false
+        selectTime.setOnClickListener(View.OnClickListener {
+            if (tPicker_already_ON) {
+                selectTime.setTypeface(null, Typeface.NORMAL)
+                selectTime.setBackgroundResource(R.drawable.button_click_off)
+                timePicker.visibility = View.GONE
+                tPicker_already_ON = false
             } else {
-                selectDate2.setTypeface(null, Typeface.BOLD)
-                selectDate2.setBackgroundResource(R.drawable.button_click_on)
-                calView2.visibility = View.VISIBLE
-                cal2_already_ON = true
+                selectTime.setTypeface(null, Typeface.BOLD)
+                selectTime.setBackgroundResource(R.drawable.button_click_on)
+                timePicker.visibility = View.VISIBLE
+                tPicker_already_ON = true
             }
         })
 
-        calView1.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            val cal:Calendar = Calendar.getInstance()
-            cal.set(year,month,dayOfMonth)
+        calView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            val cal: Calendar = Calendar.getInstance()
+            cal.set(year, month, dayOfMonth)
             val day: String = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
 
-            selectDate1.setText("${month+1}월 ${dayOfMonth}일 (${day})")
+            selectDate.setText("${month + 1}월 ${dayOfMonth}일 (${day})")
         }
-        calView2.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            val cal:Calendar = Calendar.getInstance()
-            cal.set(year,month,dayOfMonth)
-            val day: String = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
-            selectDate2.setText("${month+1}월 ${dayOfMonth}일 (${day})")
+        timePicker.setOnTimeChangedListener { view, hour, min ->
+            if (hour < 12) {
+                selectTime.setText("오전 ${hour}:${min}")
+            } else {
+                selectTime.setText("오후 ${hour - 12}:${min}")
+            }
+        }
+    }
 
-        }
+    fun setViewId() {
+        selectDate = findViewById(R.id.selectDate)
+        selectTime = findViewById(R.id.selectTime)
+        calView = findViewById<CalendarView>(R.id.calView)
+        timePicker = findViewById(R.id.timePicker)
     }
-    fun setViewId(){
-        selectDate1 = findViewById(R.id.selectDate1)
-        selectDate2 = findViewById(R.id.selectDate2)
-        calView1 = findViewById<CalendarView>(R.id.calView1)
-        calView2 = findViewById<CalendarView>(R.id.calView2)
-    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun calViewInit(){
-        calView2.visibility = View.GONE
+    fun viewInit() {
+        calView.visibility = View.GONE
+        timePicker.visibility = View.GONE
 
-        var current=LocalDateTime.now()
-        var formatter=DateTimeFormatter.ofPattern("MM월 dd일 (E)").withLocale(Locale.forLanguageTag("ko"))
-        var formatted=current.format(formatter)
-        selectDate1.setText(formatted)
-        selectDate2.setText(formatted)
+        val cal: Calendar = Calendar.getInstance()
+        val month = (cal.get(Calendar.MONTH) + 1).toString()
+        val date = cal.get(Calendar.DATE).toString()
+        val dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+
+        selectDate.setText("${month}월 ${date}일 (${dayOfWeek})")
     }
 
 
