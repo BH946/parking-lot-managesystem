@@ -5,14 +5,12 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.CalendarView
+import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import okhttp3.internal.Internal.instance
 import softwareProject.parkingLot.R
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.Calendar.*
 
@@ -22,9 +20,12 @@ class ReservationActivity : AppCompatActivity() {
     lateinit var selectTime: TextView
     lateinit var calView: CalendarView
     lateinit var timePicker: TimePicker
+    lateinit var selectReservationTime: TextView
+    lateinit var numberPicker: NumberPicker
 
     var cal_already_ON = false
     var tPicker_already_ON = false
+    var numberPicker_already_ON = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +62,20 @@ class ReservationActivity : AppCompatActivity() {
                 tPicker_already_ON = true
             }
         })
+        selectReservationTime.setOnClickListener(View.OnClickListener {
+            if (numberPicker_already_ON) {
+                selectReservationTime.setTypeface(null, Typeface.NORMAL)
+                selectReservationTime.setBackgroundResource(R.drawable.button_click_off)
+                numberPicker.visibility = View.GONE
+                numberPicker_already_ON = false
+            } else {
+                selectReservationTime.setTypeface(null, Typeface.BOLD)
+                selectReservationTime.setBackgroundResource(R.drawable.button_click_on)
+                numberPicker.visibility = View.VISIBLE
+                numberPicker_already_ON = true
+            }
+        })
+
 
         calView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val cal: Calendar = Calendar.getInstance()
@@ -76,24 +91,33 @@ class ReservationActivity : AppCompatActivity() {
                 selectTime.setText("오후 ${hour - 12}:${min}")
             }
         }
+        numberPicker.setOnValueChangedListener { numberPicker, i1, i2 ->
+            selectReservationTime.setText("${i2} 시간")
+
+        }
     }
 
     fun setViewId() {
         selectDate = findViewById(R.id.selectDate)
-        selectTime = findViewById(R.id.selectTime)
         calView = findViewById<CalendarView>(R.id.calView)
+        selectTime = findViewById(R.id.selectTime)
         timePicker = findViewById(R.id.timePicker)
+        selectReservationTime = findViewById(R.id.selectReservationTime)
+        numberPicker = findViewById(R.id.numberPicker)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun viewInit() {
         calView.visibility = View.GONE
         timePicker.visibility = View.GONE
+        numberPicker.visibility = View.GONE
 
         val cal: Calendar = Calendar.getInstance()
         val month = (cal.get(Calendar.MONTH) + 1).toString()
         val date = cal.get(Calendar.DATE).toString()
         val dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+        numberPicker.minValue = 1
+        numberPicker.maxValue = 12
 
         selectDate.setText("${month}월 ${date}일 (${dayOfWeek})")
     }
