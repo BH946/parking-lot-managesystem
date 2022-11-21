@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="naver_map_client_id">bd415mp647</string>
-    <string name="parking_location_key">noPG7qG7dO3ftTu/rjrDZxXLyQ3EwSpIUGmkLTfbCleCIgtBkt2GQFv+bcGhS/+65IKs4pdQ0VqWlRrDiDVmpw==</string>
+    <string name="parking_location_key1">noPG7qG7dO3ftTu/rjrDZxXLyQ3EwSpIUGmkLTfbCleCIgtBkt2GQFv+bcGhS/+65IKs4pdQ0VqWlRrDiDVmpw==</string>
+    <string name="parking_location_key2">noPG7qG7dO3ftTu%2FrjrDZxXLyQ3EwSpIUGmkLTfbCleCIgtBkt2GQFv%2BbcGhS%2F%2B65IKs4pdQ0VqWlRrDiDVmpw%3D%3D</string>
 </resources>
