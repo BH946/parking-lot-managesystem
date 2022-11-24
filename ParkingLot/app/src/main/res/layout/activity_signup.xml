@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#000000">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="회 원 가 입"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="206dp"
+            android:layout_gravity="center"
+            android:src="@drawable/bbaicon" />
+
+
+
+        <EditText
+            android:id="@+id/eName"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:radius="25dp"
+            android:background="#ffffff"
+            android:inputType="text"
+            android:hint="nickname" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+        <EditText
+            android:id="@+id/eID"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:radius="25dp"
+            android:background="#cf6679"
+            android:inputType="textEmailAddress"
+            android:hint="email" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <EditText
+            android:id="@+id/ePW"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#cf6679"
+            android:radius="25dp"
+            android:hint="password" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Button
+            android:id="@+id/btn_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:color="#3C3F41"
+            android:gravity="center"
+            android:radius="50dp"
+            android:text="가입하기"
+            app:backgroundTint="#CF6679" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

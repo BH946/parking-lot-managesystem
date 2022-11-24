@@ -1,6 +1,7 @@
 package softwareProject.parkingLot.Map
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 // "data" 내부
 data class Parking (
@@ -23,4 +24,4 @@ data class Parking (
     @SerializedName("공휴일운영종료시각") val holidayEndTime: String,
     @SerializedName("요금정보") val cost: String,
     @SerializedName("연락처") val tel: String,
-)
+) : Serializable
