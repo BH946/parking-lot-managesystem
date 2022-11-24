@@ -1,47 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    tools:context=".Login.LoginActivity">
+    android:paddingTop="16dp">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="67dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="L 0 G I N"
-        android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="172dp"
+        android:layout_height="208dp"
         android:layout_gravity="center"
-        android:src="@drawable/logo3" />
+        android:src="@drawable/bbaicon" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="72dp"
+            android:layout_width="66dp"
             android:layout_height="wrap_content"
             android:text="ID "
-            android:textStyle="bold"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/eID"
-            android:layout_width="308dp"
+            android:id="@+id/ID"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
             android:hint="ID"
@@ -49,20 +48,22 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
         <TextView
-            android:layout_width="72dp"
+            android:layout_width="66dp"
             android:layout_height="wrap_content"
             android:text="PW "
-            android:textStyle="bold"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/ePW"
-            android:layout_width="308dp"
+            android:id="@+id/PW"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
             android:hint="PW"
@@ -70,35 +71,47 @@
     </LinearLayout>
 
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <android.widget.Button
-        android:id="@+id/btn3"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/btn_login"
+        android:layout_gravity="center"
         android:text="로그인"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:background="@drawable/btn_login" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="82dp"
+        android:layout_gravity="center"
         android:orientation="horizontal"
         android:weightSum="10">
 
         <TextView
-            android:layout_width="189dp"
-            android:layout_height="44dp"
+            android:id="@+id/sign_up"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="회원가입 "
-            android:id="@+id/sign_up"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
         <TextView
-            android:layout_width="185dp"
-            android:layout_height="44dp"
+            android:id="@+id/manager_mode"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="관리자 모드"
-            android:id="@+id/manager_mode"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -106,13 +119,9 @@
         android:id="@+id/btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="맵 확인용"/>
-
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="회원가입 테스트용"/>
+        android:text="맵 확인용(개발완료 후 지울거임)"/>
 
 
 </LinearLayout>
+
+

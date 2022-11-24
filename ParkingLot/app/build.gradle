@@ -49,7 +49,7 @@ dependencies {
     // firebase - authentication, realtime db
     implementation platform('com.google.firebase:firebase-bom:31.0.2')
     implementation 'com.google.firebase:firebase-auth:21.1.0'
-    implementation 'com.google.firebase:firebase-database:9.0.0'
+    implementation 'com.google.firebase:firebase-database:20.1.0'
     // multiDex error 해결
     implementation 'androidx.multidex:multidex:2.0.1'
     // retrofit

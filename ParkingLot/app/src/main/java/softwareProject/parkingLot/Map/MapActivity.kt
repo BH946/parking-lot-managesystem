@@ -27,6 +27,7 @@ import softwareProject.parkingLot.R
 import softwareProject.parkingLot.User.ReservationActivity
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
+    private lateinit var parking : Parking
 
     // lazy : lateinit과 동일. 다만, val에 사용
     private lateinit var naverMap : NaverMap

@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkingLot">
+        <activity android:name=".Host.HostLoginActivity"></activity>
         <activity android:name="softwareProject.parkingLot.Map.MapActivity"/>
         <activity android:name="softwareProject.parkingLot.User.ReservationActivity"/>
         <activity android:name="softwareProject.parkingLot.Login.LoginActivity"/>

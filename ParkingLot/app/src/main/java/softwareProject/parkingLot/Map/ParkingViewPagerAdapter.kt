@@ -48,6 +48,7 @@ class ParkingViewPagerAdapter : ListAdapter<Parking, ParkingViewPagerAdapter.Ite
                         fullCheckTextView.text = "여유" // 임의로 설정
                     }
                     else {
+                        Log.d("test", snapshot.child(parking.id.toString()).child("user").value.toString())
                         var num = snapshot.child(parking.id.toString()).child("counting").value
                         countTextView.text = num.toString()+"/"+parking.num // 카운팅 수와 전체 자리수
                         if(num.toString().toInt()>=parking.num.toInt()) {
