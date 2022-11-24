@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import softwareProject.parkingLot.R
+import softwareProject.parkingLot.User.ParkingInfoActivity
 import softwareProject.parkingLot.User.ReservationActivity
 
 // 뷰페이저 사용때 item관련 xml에 루트 레이아웃은 꼭 너비, 높이가 match여야 한다.
@@ -35,7 +36,8 @@ class ParkingViewPagerAdapter : ListAdapter<Parking, ParkingViewPagerAdapter.Ite
             titleTextView.text = parking.name
 
             reservationButton.setOnClickListener{
-                val intent = Intent(view.context, ReservationActivity::class.java)
+                val intent = Intent(view.context, ParkingInfoActivity::class.java)
+                intent.putExtra("parking", parking)
                 view.context.startActivity(intent)
             }
 
