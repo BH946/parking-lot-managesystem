@@ -32,7 +32,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickList
     // lazy : lateinit과 동일. 다만, val에 사용
     private lateinit var naverMap : NaverMap
     private lateinit var locationSource : FusedLocationSource // 위치 반환 객체
-    private lateinit var btn1 : Button
 
     private val mapView: MapView by lazy {
         findViewById<MapView>(R.id.mapView)
@@ -51,12 +50,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickList
 
         // 네이버 맵 객체 가져오기(콜백 방식 사용)
         mapView.getMapAsync(this)
-
-        btn1 = findViewById<Button>(R.id.btn1)
-        btn1.setOnClickListener {
-            val intent = Intent(applicationContext, ReservationActivity::class.java)
-            startActivity(intent)
-        }
         // viewpager적용
         viewPager.adapter = viewPagerAdapter
 

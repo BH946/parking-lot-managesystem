@@ -20,6 +20,7 @@
         <activity android:name="softwareProject.parkingLot.Login.LoginActivity"/>
         <activity android:name="softwareProject.parkingLot.Host.HostActivity"/>
         <activity android:name="softwareProject.parkingLot.Login.SignUpActivity"/>
+        <activity android:name="softwareProject.parkingLot.User.ParkingInfoActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
