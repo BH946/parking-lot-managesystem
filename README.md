@@ -49,3 +49,68 @@ AVD는 API24, pixel2 구동
 안드로이드 스튜디오 4.1.2
 ```
 
+<br>
+
+## Folder Structure
+
+* [`/parkingLot/MainActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/MainActivity.kt)
+  * 루트 파일(제일 처음 실행)
+  * 로딩 화면(`activity_main.xml`) -> 로그인 화면(`LoginActivity.kt`) 순으로 실행
+* [`/parkingLot/Login/LoginActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Login/LoginActivity.kt)
+  * 로그인 화면이며 `firebase` DB를 활용해서 구현
+  * 로그인시 `MapActivity.kt` 로 이동
+  * 관리자 로그인 화면 이동시 `HostLoginActivity.kt` 로 이동
+* [`/parkingLot/Login/SignUpActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Login/SignUpActivity.kt)
+  * 회원가입 화면이며 `firebase` DB를 활용해서 구현
+* [`/parkingLot/Map/MapActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Map/MapActivity.kt)
+  * 맵 화면을 구성하는 액티비티
+    * `네이버 맵 API` 활용
+    * 주차장 위치 데이터는 `공공 데이터 포털 API` 활용
+    * `ParkingViewPagerAdapter.kt` 에 데이터 전달
+  * [`/parkingLot/Map/Parking.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Map/Parking.kt)
+    * API 로 가져온 데이터를 가공하기 위한 모델
+  * [`/parkingLot/Map/ParkingDto.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Map/ParkingDto.kt)
+    * API 로 가져온 데이터를 가공하기 위한 모델 - `Parking.kt 상위 모델`
+  * [`/parkingLot/Map/ParkingService.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Map/ParkingService.kt)
+    * `retrofit2` 라이브러리로 API를 `GET 방식`으로 불러오는 파일
+* [`/parkingLot/Map/ParkingViewPagerAdapter.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Map/ParkingViewPagerAdapter.kt)
+  * 슬라이드 형태의 UI를 사용하기 위해 `ViewPager` 기능을 사용하는 파일
+  * `MapActivity.kt` 에서 데이터 받고, `firebase` DB의 데이터도 활용
+* [`/parkingLot/User/ReservationActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/User/ReservationActivity.kt)
+  * 주차장 예약하기 위해 세부정보를 나타내는 파일
+* [`/parkingLot/User/ParkingInfoActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/User/ParkingInfoActivity.kt)
+  * 주차장 예약하는 파일
+  * `firebase` DB에 카운팅값을 추가하게 됨
+* [`/parkingLot/Host/HostActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Host/HostActivity.kt)
+  * 호스트 화면을 보여주는 파일
+  * `firebase` DB의 데이터 활용
+  * [`/parkingLot/Host/HostLoginActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/Host/HostLoginActivity.kt)
+    * 호스트 로그인 파일이며, 로그인은 개발자가 제공하는 키값으로 로그인
+    * 로그인 -> `HostActivity.kt` 로 이동
+* [`/layout/activity_main.xml`](./ParkingLot/app/src/main/res/layout/activity_main.xml)
+  * 앱 실행 초기 로딩 화면 -> 이후 `activity_login.xml` 화면
+* [`/layout/activity_login.xml`](./ParkingLot/app/src/main/res/layout/activity_login.xml)
+  * 로그인 화면을 구성
+* [`/layout/activity_signup.xml`](./ParkingLot/app/src/main/res/layout/activity_signup.xml)
+  * 회원가입 화면을 구성
+* [`/layout/activity_map.xml`](./ParkingLot/app/src/main/res/layout/activity_map.xml)
+  * 맵 화면을 구성(주차장 위치 정보 제공)
+  * [`/layout/item_parking_viewpager.xml`](./ParkingLot/app/src/main/res/layout/item_parking_viewpager.xml)
+    * `viewpager` 기능을 사용하는데 구성한 item 화면
+  * [`/layout/activity_reservation.xml`](./ParkingLot/app/src/main/res/layout/activity_reservation.xml)
+    * 주차장 세부 정보로 구성
+  * [`/layout/activity_parking_info.xml`](./ParkingLot/app/src/main/res/layout/activity_parking_info.xml)
+    * 주차장 예약 화면으로 구성
+* [`/layout/activity_hostlogin.xml`](./ParkingLot/app/src/main/res/layout/activity_hostlogin.xml)
+  * 호스트 로그인 화면을 구성
+  * [`/layout/activity_host.xml`](./ParkingLot/app/src/main/res/layout/activity_host.xml)
+    * 호스트(관리자) 모드 화면을 구성
+
+* [`/values/api_key.xml`](./ParkingLot/app/src/main/res/values/api_key.xml)
+  * 네이버 맵, 공공 데이터 API 키로 구성
+* [`/build.gradle`](./ParkingLot/app/build.gradle)
+  * naver map sdk(api)
+  * firebase - authentication, realtime db
+  * multidex
+  * retrofit
+  * gson
