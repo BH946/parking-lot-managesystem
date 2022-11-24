@@ -49,3 +49,11 @@ AVD는 API24, pixel2 구동
 안드로이드 스튜디오 4.1.2
 ```
 
+<br>
+
+## Folder Structure
+
+* [`/src/App.jsx`](./src/App.jsx)
+  * 
+
+[`/parkingLot/MainActivity.kt`](./ParkingLot/app/src/main/java/softwareProject/parkingLot/MainActivity.kt)
