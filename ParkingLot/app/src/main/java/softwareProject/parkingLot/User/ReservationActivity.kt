@@ -21,20 +21,25 @@ import java.util.*
 import java.util.Calendar.*
 
 class ReservationActivity : AppCompatActivity() {
-    val database = FirebaseDatabase.getInstance()
-    val parkingDB = database.getReference()
+    // DB 객체 설정
+    private val database = FirebaseDatabase.getInstance()
+    private val parkingDB = database.getReference()
+    private val auth = FirebaseAuth.getInstance()
+    private val currentUser = auth.currentUser?.uid.toString()
+
+    // intent로 받아온 Parking 데이터 저장할 객체
     lateinit var parking: Parking
 
-    private val auth = FirebaseAuth.getInstance() // firebase auth 객체
-
+    // xml 뷰 연결 객체
     lateinit var selectDate: TextView
     lateinit var selectTime: TextView
+    lateinit var selectReservationTime: TextView
     lateinit var calView: CalendarView
     lateinit var timePicker: TimePicker
-    lateinit var selectReservationTime: TextView
     lateinit var numberPicker: NumberPicker
     lateinit var btnReservation: Button
 
+    // 해당 뷰의 오픈 유무 체크용 변수
     var cal_already_ON = false
     var tPicker_already_ON = false
     var numberPicker_already_ON = false
@@ -48,7 +53,6 @@ class ReservationActivity : AppCompatActivity() {
         setViewId()
         initView()
         setListener()
-
 
     }
 
@@ -140,11 +144,13 @@ class ReservationActivity : AppCompatActivity() {
             selectReservationTime.setText("${i2} 시간")
 
         }
+        // 예약하기 버튼 클릭 시
         btnReservation.setOnClickListener {
             parkingDB.get().addOnSuccessListener {
-                val currentUser = auth.currentUser?.uid.toString()
+                // user -> [currentUser] -> name 값 받아오기
                 val currentUser_name =
                     it.child("user").child(currentUser).child("name").getValue().toString()
+                // Parking -> [parking.id] -> counting 값 받아오기
                 var counting =
                     it.child("Parking").child(parking.id.toString()).child("counting").getValue()
                         .toString().toInt()
@@ -156,14 +162,12 @@ class ReservationActivity : AppCompatActivity() {
                 parkingDB.child("user").child(currentUser).child("reservation")
                     .setValue(parking.id.toString())
 
-                if (counting == null) {
-                    parkingDB.child("Parking").child(parking.id.toString()).child("counting")
-                        .setValue(1)
-                } else {
-                    counting += 1
-                    parkingDB.child("Parking").child(parking.id.toString()).child("counting")
-                        .setValue(counting)
-                }
+                // 예약자수+1 후 DB에 저장
+                counting += 1
+                parkingDB.child("Parking").child(parking.id.toString()).child("counting")
+                    .setValue(counting)
+
+                // 첫 화면으로 돌아감
                 val intent = Intent(this, MapActivity::class.java)
                 startActivity(intent)
             }
