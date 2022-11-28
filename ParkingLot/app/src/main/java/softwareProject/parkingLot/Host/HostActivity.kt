@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import softwareProject.parkingLot.R
 import java.util.*
+import kotlin.concurrent.thread
 
 class HostActivity : AppCompatActivity() {
     private lateinit var dbRef : DatabaseReference
@@ -19,7 +20,6 @@ class HostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_host)
         title = "붕붕아-관리자 모드"
         val text = findViewById<TextView>(R.id.space)
-        val cal = Calendar.getInstance()
         var y = 0
         var m = 0
         var d = 0
@@ -41,12 +41,21 @@ class HostActivity : AppCompatActivity() {
         reservation.text = this.reservation
         //Log.d("txt확인",txt+","+txt1)
 
-        y = cal[Calendar.YEAR]
-        m = cal[Calendar.MONTH] + 1
-        d = cal[Calendar.DAY_OF_MONTH]
-        h = cal[Calendar.HOUR_OF_DAY]
-        mi = cal[Calendar.MINUTE]
-        text.text = y.toString() + "년" + m + "월" + d + "일" + h + "시" + mi + "분"
+        thread(start = true){
+            var i = 0
+            while(true) {
+                var cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
+                runOnUiThread {
+                    y = cal[Calendar.YEAR]
+                    m = cal[Calendar.MONTH] + 1
+                    d = cal[Calendar.DAY_OF_MONTH]
+                    h = cal[Calendar.HOUR_OF_DAY]
+                    mi = cal[Calendar.MINUTE]
+                    text.text = y.toString() + "년" + m + "월" + d + "일" + h + "시" + mi + "분"
+                }
+                Thread.sleep(1000)
+            }
+        }
 
         var resUserNum = 0     // 현재 예약 손님
         var allUserNum = 0    //최대 예약손님

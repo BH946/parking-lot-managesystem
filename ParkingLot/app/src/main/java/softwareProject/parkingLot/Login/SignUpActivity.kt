@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -36,25 +37,32 @@ class SignUpActivity : AppCompatActivity() {
             val name = getInputNickname()
             val email = getInputEmail()
             val password = getInputPassword()
+            val checkBox = findViewById<CheckBox>(R.id.checkBox)
             if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
-                    TextUtils.isEmpty(password)) {
+                TextUtils.isEmpty(password)) {
                 Toast.makeText(this,"정보를 바르게 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener;
             }
 
-            val intent= Intent(applicationContext, LoginActivity::class.java)
 
-            auth.createUserWithEmailAndPassword(email, password) // firebase가 제공하는 메소드
+            val intent= Intent(applicationContext, LoginActivity::class.java)
+            if(checkBox.isChecked) {
+                auth.createUserWithEmailAndPassword(email, password) // firebase가 제공하는 메소드
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(this,"회원가입 완료되었습니다", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "회원가입 완료되었습니다", Toast.LENGTH_SHORT).show()
                             startActivity(intent)
-                            addUserToDatabase(name,email,auth.currentUser?.uid!!)
+                            addUserToDatabase(name, email, auth.currentUser?.uid!!)
 
                         } else {
-                            Toast.makeText(this,"다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "다시 시도해주세요", Toast.LENGTH_SHORT).show()
                         }
                     }
+            }
+            else{
+                Toast.makeText(this,"광고성 수신정보에 동의해주세요", Toast.LENGTH_LONG).show()
+                return@setOnClickListener;
+            }
         }
     }
     private fun getInputNickname():String{
