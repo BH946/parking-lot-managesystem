@@ -1,17 +1,17 @@
 package softwareProject.parkingLot.Map
 
+import android.app.TabActivity
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import softwareProject.parkingLot.R
 import softwareProject.parkingLot.User.ReservationActivity
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
+class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
     private lateinit var parking : Parking
 
     // lazy : lateinit과 동일. 다만, val에 사용
@@ -42,11 +42,17 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickList
     private lateinit var parkingDto : ParkingDto
     private val viewPagerAdapter = ParkingViewPagerAdapter()
 
+    private lateinit var user_name : TextView
+    private lateinit var parking_lot_name : TextView
+    private lateinit var startTime : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
         mapView.onCreate(savedInstanceState) // 액티비티 만들때 onCreate()는 반드시 호출
         title = "붕붕이"
+
+        initFun()
 
         // 네이버 맵 객체 가져오기(콜백 방식 사용)
         mapView.getMapAsync(this)
@@ -65,14 +71,17 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickList
             }
         })
 
-        // 감천2 공영 주차장으로 테스트 - id : 11063
-        // reference는 db의 root를 의미
-//        val parkingDB = FirebaseDatabase.getInstance().getReference().child("Parking").child("11063")
-//        val parking = mutableMapOf<String, Any>()
-//        parking["user"] = "ccc@ccc.ccc"
-//        parking["counting"] = 0
-//        parkingDB.updateChildren(parking)
+        // 탭
+        var tabHost = this.tabHost
+        var tabSpecMap = tabHost.newTabSpec("Map").setIndicator("Map")
+        tabSpecMap.setContent(R.id.tabMap)
+        tabHost.addTab(tabSpecMap)
 
+        var tabSpecMy = tabHost.newTabSpec("My").setIndicator("My")
+        tabSpecMy.setContent(R.id.tabMy)
+        tabHost.addTab(tabSpecMy)
+
+        tabHost.currentTab = 0
     }
 
     // 오버레이는 마커 총집합을 의미. 즉, 마커 클릭 때 동작 설정
@@ -197,6 +206,26 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickList
             }
             return
         }
+    }
+
+    private fun initFun() {
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser?.uid.toString()
+        user_name = findViewById<TextView>(R.id.user_name)
+        parking_lot_name = findViewById<TextView>(R.id.parking_lot_name)
+        startTime = findViewById<TextView>(R.id.startTime)
+
+        // realtime db -> 없으면 알아서 생성
+        val parkingDB = FirebaseDatabase.getInstance().getReference().child("user")
+        parkingDB.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+//                Log.d("test", snapshot.child(currentUser).child("name").value.toString())
+                user_name.text = snapshot.child(currentUser).child("name").value.toString()
+                parking_lot_name.text = snapshot.child(currentUser).child("parking_name").value.toString()
+                startTime.text = snapshot.child(currentUser).child("reservation_time").value.toString()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     override fun onStart() {
