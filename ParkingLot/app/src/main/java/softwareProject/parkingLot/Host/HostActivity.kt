@@ -11,7 +11,9 @@ import java.util.*
 
 class HostActivity : AppCompatActivity() {
     private lateinit var dbRef : DatabaseReference
-    private lateinit var txt : String
+    private lateinit var name : String
+    private lateinit var reservation : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host)
@@ -31,8 +33,13 @@ class HostActivity : AppCompatActivity() {
         val out = findViewById<Button>(R.id.out)
 
         val host = findViewById<TextView>(R.id.host)
-        txt = intent.getStringExtra("name").toString()
-        host.text=txt
+        name = intent.getStringExtra("name").toString()
+        host.text=name
+
+        val reservation = findViewById<TextView>(R.id.reservation)
+        this.reservation = intent.getStringExtra("reservation_user").toString()
+        reservation.text = this.reservation
+        //Log.d("txt확인",txt+","+txt1)
 
         y = cal[Calendar.YEAR]
         m = cal[Calendar.MONTH] + 1
