@@ -33,16 +33,13 @@ class ReservationActivity : AppCompatActivity() {
     // xml 뷰 연결 객체
     lateinit var selectDate: TextView
     lateinit var selectTime: TextView
-    lateinit var selectReservationTime: TextView
     lateinit var calView: CalendarView
     lateinit var timePicker: TimePicker
-    lateinit var numberPicker: NumberPicker
     lateinit var btnReservation: Button
 
     // 해당 뷰의 오픈 유무 체크용 변수
     var cal_already_ON = false
     var tPicker_already_ON = false
-    var numberPicker_already_ON = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +58,7 @@ class ReservationActivity : AppCompatActivity() {
         calView = findViewById<CalendarView>(R.id.calView)
         selectTime = findViewById(R.id.selectTime)
         timePicker = findViewById(R.id.timePicker)
-        selectReservationTime = findViewById(R.id.selectReservationTime)
-        numberPicker = findViewById(R.id.numberPicker)
+
         btnReservation = findViewById(R.id.btn_reservation)
     }
 
@@ -72,14 +68,11 @@ class ReservationActivity : AppCompatActivity() {
 
         calView.visibility = View.GONE
         timePicker.visibility = View.GONE
-        numberPicker.visibility = View.GONE
 
         val cal: Calendar = Calendar.getInstance()
         val month = (cal.get(Calendar.MONTH) + 1).toString()
         val date = cal.get(Calendar.DATE).toString()
         val dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
-        numberPicker.minValue = 1
-        numberPicker.maxValue = 12
 
         selectDate.setText("${month}월 ${date}일 (${dayOfWeek})")
     }
@@ -111,20 +104,6 @@ class ReservationActivity : AppCompatActivity() {
                 tPicker_already_ON = true
             }
         })
-        selectReservationTime.setOnClickListener(View.OnClickListener {
-            if (numberPicker_already_ON) {
-                selectReservationTime.setTypeface(null, Typeface.NORMAL)
-                selectReservationTime.setBackgroundResource(R.drawable.button_click_off)
-                numberPicker.visibility = View.GONE
-                numberPicker_already_ON = false
-            } else {
-                selectReservationTime.setTypeface(null, Typeface.BOLD)
-                selectReservationTime.setBackgroundResource(R.drawable.button_click_on)
-                numberPicker.visibility = View.VISIBLE
-                numberPicker_already_ON = true
-            }
-        })
-
 
         calView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val cal: Calendar = Calendar.getInstance()
@@ -140,10 +119,6 @@ class ReservationActivity : AppCompatActivity() {
                 selectTime.setText("오후 ${hour - 12}:${min}")
             }
         }
-        numberPicker.setOnValueChangedListener { numberPicker, i1, i2 ->
-            selectReservationTime.setText("${i2} 시간")
-
-        }
         // 예약하기 버튼 클릭 시
         btnReservation.setOnClickListener {
             parkingDB.get().addOnSuccessListener {
@@ -158,9 +133,12 @@ class ReservationActivity : AppCompatActivity() {
                 // host -> parking id -> reservation_user에 유저 닉네임으로 설정
                 parkingDB.child("host").child(parking.id.toString()).child("reservation_user")
                     .setValue(currentUser_name)
-                // user -> id -> reservation에 예약한 예약한 주차장 id 저장
-                parkingDB.child("user").child(currentUser).child("reservation")
-                    .setValue(parking.id.toString())
+                // user -> id -> reservation에 예약한 주차장 id 저장
+                parkingDB.child("user").child(currentUser).child("parking_name")
+                    .setValue(parking.name.toString())
+                // user -> id -> reservation_time에 예약시간 저장
+                parkingDB.child("user").child(currentUser).child("reservation_time")
+                    .setValue(selectDate.text.toString() +" "+ selectTime.text.toString())
 
                 // 예약자수+1 후 DB에 저장
                 counting += 1
