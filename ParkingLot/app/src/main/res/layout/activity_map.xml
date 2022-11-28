@@ -1,27 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<TabHost
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/tabhost"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Map.MapActivity">
-
-    <com.naver.maps.map.MapView
-        android:layout_weight="1"
-        android:id="@+id/mapView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/mapViewPager2"
+        <FrameLayout
+            android:layout_weight="1"
+            android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="50dp"
-            android:orientation="horizontal"/>
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/tabMap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".Map.MapActivity">
 
-    </com.naver.maps.map.MapView>
+                <com.naver.maps.map.MapView
+                    android:layout_weight="1"
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-</LinearLayout>
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/mapViewPager2"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="50dp"
+                        android:orientation="horizontal"/>
+
+                </com.naver.maps.map.MapView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/tabMy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#000000"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="70dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="201dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/bbaicon" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="000"
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 님,"
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "현재 이용중이신 주차장 내역입니다."
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
+                <View
+                    android:id="@+id/centerLine3"
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:background="#ffffff" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="주차장명 : "
+                        android:textColor="#D391A7"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/parking_lot_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="예약시간 : "
+                        android:textColor="#D391A7"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/startTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <android.widget.Button
+                    android:id="@+id/return2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:text="return"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:background="@drawable/btn_login" />
+
+            </LinearLayout>
+        </FrameLayout>
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</TabHost>

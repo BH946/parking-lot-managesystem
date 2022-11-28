@@ -1,6 +1,7 @@
 package softwareProject.parkingLot.User
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,13 +9,19 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.viewpager2.widget.ViewPager2
 import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
 import com.google.firebase.database.FirebaseDatabase;
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.FusedLocationSource
+import com.naver.maps.map.util.MarkerIcons
 import softwareProject.parkingLot.Map.MapActivity
 
 
-class ParkingInfoActivity : AppCompatActivity() {
+class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
     val database = FirebaseDatabase.getInstance()
     val parkingDB = database.getReference()
     lateinit var parking: Parking
@@ -32,17 +39,22 @@ class ParkingInfoActivity : AppCompatActivity() {
 
     lateinit var btn_showReservationActivity: Button
 
+    private lateinit var naverMap : NaverMap
+    private val mapView: MapView by lazy {
+        findViewById<MapView>(R.id.mapView)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parking_info)
+        mapView.onCreate(savedInstanceState) // 액티비티 만들때 onCreate()는 반드시 호출
 
         initView()
         setViewText()
         setListener()
         printParkingData()
 
-
+        mapView.getMapAsync(this)
     }
 
     fun initView() {
@@ -87,12 +99,8 @@ class ParkingInfoActivity : AppCompatActivity() {
             startActivity(intent)
         }
         parkingDB.get().addOnSuccessListener {
-            var counting =
-                it.child("Parking").child(parking.id.toString()).child("counting").getValue()
-                    .toString().toInt()
-            var size =
-                it.child("Parking").child(parking.id.toString()).child("size").getValue()
-                    .toString().toInt()
+            var counting = it.child("Parking").child(parking.id.toString()).child("counting").getValue().toString().toInt()
+            var size = it.child("Parking").child(parking.id.toString()).child("size").getValue().toString().toInt()
             Log.d("counting", counting.toString())
             if (counting >= size) {
                 btn_showReservationActivity.isEnabled = false
@@ -121,6 +129,21 @@ class ParkingInfoActivity : AppCompatActivity() {
         Log.d("parking data!!!!!!", parking.holidayEndTime);
         Log.d("parking data!!!!!!", parking.cost);
         Log.d("parking data!!!!!!", parking.tel);
+    }
+
+    override fun onMapReady(map: NaverMap) {
+        naverMap = map
+
+        // default : 동아대 위치
+        val cameraUpdate = CameraUpdate.scrollTo(LatLng(parking.lat.toDouble(),parking.lon.toDouble()))
+        naverMap.moveCamera(cameraUpdate)
+
+        val marker = Marker()
+        marker.position = LatLng(parking.lat.toDouble(),parking.lon.toDouble())
+        marker.map = naverMap
+        marker.tag = parking.id
+        marker.icon = MarkerIcons.BLACK
+        marker.iconTintColor = Color.RED
     }
 
 }
