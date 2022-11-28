@@ -68,10 +68,12 @@
             android:radius="25dp"
             android:hint="password" />
 
-        <TextView
-            android:id="@+id/textView2"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="wrap_content"
+            android:text="광고성 수신정보 동의"
+            android:textColor="#ffffff"/>
 
         <Button
             android:id="@+id/btn_sign_in"
@@ -81,6 +83,8 @@
             android:gravity="center"
             android:radius="50dp"
             android:text="가입하기"
+            android:textColor="#000000"
+            android:textStyle="bold"
             app:backgroundTint="#CF6679" />
 
 
