@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -23,6 +24,8 @@ class ReservationActivity : AppCompatActivity() {
     val database = FirebaseDatabase.getInstance()
     val parkingDB = database.getReference()
     lateinit var parking: Parking
+
+    private val auth = FirebaseAuth.getInstance() // firebase auth 객체
 
     lateinit var selectDate: TextView
     lateinit var selectTime: TextView
@@ -139,19 +142,21 @@ class ReservationActivity : AppCompatActivity() {
         }
         btnReservation.setOnClickListener {
             parkingDB.get().addOnSuccessListener {
+                val currentUser = auth.currentUser?.uid
                 var counting =
                     it.child("Parking").child(parking.id.toString()).child("counting").getValue()
                         .toString().toInt()
+                parkingDB.child("host").child(parking.id.toString()).child("reservation_user").setValue(currentUser.toString())
+                Log.d("currentUser",currentUser.toString())
+
                 Log.d("counting", counting.toString())
                 if (counting == null) {
                     parkingDB.child("Parking").child(parking.id.toString()).child("counting")
                         .setValue(1)
-                    Log.d("counting+1", "1")
                 } else {
                     counting += 1
                     parkingDB.child("Parking").child(parking.id.toString()).child("counting")
                         .setValue(counting)
-                    Log.d("counting+1", counting.toString())
                 }
                 val intent = Intent(this, MapActivity::class.java)
                 startActivity(intent)
