@@ -5,13 +5,11 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
@@ -24,7 +22,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import softwareProject.parkingLot.R
-import softwareProject.parkingLot.User.ReservationActivity
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
     private lateinit var parking : Parking
@@ -46,7 +43,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
         mapView.onCreate(savedInstanceState) // 액티비티 만들때 onCreate()는 반드시 호출
-        title = "붕붕이"
+        title = "붕붕아"
 
         // 네이버 맵 객체 가져오기(콜백 방식 사용)
         mapView.getMapAsync(this)
@@ -238,5 +235,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickList
         // 권한 상태코드
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
+
 
 }
