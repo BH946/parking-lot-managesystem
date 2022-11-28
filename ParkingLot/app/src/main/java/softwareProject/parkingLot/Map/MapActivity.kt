@@ -221,7 +221,6 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         remainingTime = findViewById<TextView>(R.id.remainingTime)
 
         var calCurrent = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
-        var calReservation = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
 
         // realtime db -> 없으면 알아서 생성
         val parkingDB = FirebaseDatabase.getInstance().getReference().child("user")
@@ -231,13 +230,9 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
                 user_name.text = snapshot.child(currentUser).child("name").value.toString()
                 parking_lot_name.text = snapshot.child(currentUser).child("parking_name").value.toString()
                 startTime.text = snapshot.child(currentUser).child("reservation_time").value.toString()
+                calCurrent.timeInMillis = calCurrent.timeInMillis - snapshot.child(currentUser).child("reservation_time_mills").value.toString().toLong()
 
-//                val reservationTime = snapshot.child(currentUser).child("reservation_time").value.toString()
-//                calReservation[Calendar.MONTH] = reservationTime.substring(0,2).toInt()
-//                calReservation[Calendar.DAY_OF_MONTH] = reservationTime.substring(5,7).toInt()
-//                calReservation[Calendar.HOUR_OF_DAY] = reservationTime.substring(16,17).toInt()
-//                calReservation[Calendar.MINUTE] = reservationTime.substring(19,21).toInt()
-
+                remainingTime.text = "${calCurrent.timeInMillis/(1000*60*60)} : " + "${calCurrent.timeInMillis/(1000*60)%60}"
 
             }
             override fun onCancelled(error: DatabaseError) {}
