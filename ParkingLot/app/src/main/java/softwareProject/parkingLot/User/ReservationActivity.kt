@@ -142,14 +142,20 @@ class ReservationActivity : AppCompatActivity() {
         }
         btnReservation.setOnClickListener {
             parkingDB.get().addOnSuccessListener {
-                val currentUser = auth.currentUser?.uid
+                val currentUser = auth.currentUser?.uid.toString()
+                val currentUser_name =
+                    it.child("user").child(currentUser).child("name").getValue().toString()
                 var counting =
                     it.child("Parking").child(parking.id.toString()).child("counting").getValue()
                         .toString().toInt()
-                parkingDB.child("host").child(parking.id.toString()).child("reservation_user").setValue(currentUser.toString())
-                Log.d("currentUser",currentUser.toString())
 
-                Log.d("counting", counting.toString())
+                // host -> parking id -> reservation_user에 유저 닉네임으로 설정
+                parkingDB.child("host").child(parking.id.toString()).child("reservation_user")
+                    .setValue(currentUser_name)
+                // user -> id -> reservation에 예약한 예약한 주차장 id 저장
+                parkingDB.child("user").child(currentUser).child("reservation")
+                    .setValue(parking.id.toString())
+
                 if (counting == null) {
                     parkingDB.child("Parking").child(parking.id.toString()).child("counting")
                         .setValue(1)
