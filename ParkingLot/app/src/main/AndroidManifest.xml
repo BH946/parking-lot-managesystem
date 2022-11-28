@@ -21,7 +21,8 @@
         <activity android:name="softwareProject.parkingLot.Host.HostActivity"/>
         <activity android:name="softwareProject.parkingLot.Login.SignUpActivity"/>
         <activity android:name="softwareProject.parkingLot.User.ParkingInfoActivity"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
