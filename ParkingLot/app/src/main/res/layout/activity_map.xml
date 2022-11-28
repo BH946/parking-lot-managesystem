@@ -135,21 +135,22 @@
                         android:textColor="#ffffff"
                         android:textSize="25dp"
                         android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="남은시간 : "
+                        android:textColor="#D391A7"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/remainingTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
                 </LinearLayout>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-                <android.widget.Button
-                    android:id="@+id/return2"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:text="return"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:background="@drawable/btn_login" />
 
             </LinearLayout>
         </FrameLayout>
