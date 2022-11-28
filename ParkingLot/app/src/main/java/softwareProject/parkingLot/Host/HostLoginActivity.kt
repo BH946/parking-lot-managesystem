@@ -5,19 +5,17 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import softwareProject.parkingLot.Map.MapActivity
 import softwareProject.parkingLot.R
-import softwareProject.parkingLot.User.UserDB
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class HostLoginActivity : AppCompatActivity() {
     private lateinit var btn : Button
     private lateinit var dbRef : DatabaseReference
-    private lateinit var txt : String
+    private lateinit var name : String
+    private lateinit var reservation_user : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hostlogin)
@@ -25,7 +23,7 @@ class HostLoginActivity : AppCompatActivity() {
         initLoginButton()
 
         dbRef = FirebaseDatabase.getInstance().reference
-        dbRef.child("host").child("5678").setValue(HostDB("부산대 주차장","5678",""))
+//        dbRef.child("host").child("5678").setValue(HostDB("부산대 주차장","5678","김철수"))
     }
     private fun initLoginButton() {
         btn = findViewById<Button>(R.id.btn_host)
@@ -39,26 +37,24 @@ class HostLoginActivity : AppCompatActivity() {
             }
 
             dbRef.child("host").child(number.toString())
-                .addValueEventListener(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.child("name").value == null) {
-                            return
-                        }else {
-                            val data = snapshot.getValue(HostDB::class.java)
-                            txt = data!!.name
-                            intent.putExtra("name",txt)
+                    .addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if(snapshot.child("name").value != null) {
+                                val data = snapshot.getValue(HostDB::class.java)
+                                name = data!!.name
+                                intent.putExtra("name", name)
+
+                            }
+                            if(snapshot.child("reservation_user").value != null){
+                                val data = snapshot.getValue(HostDB::class.java)
+                                reservation_user = data!!.reservation_user
+                                intent.putExtra("reservation_user",reservation_user)
+                            }
                             startActivity(intent)
                         }
-
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-
-                    }
-
-                })
-
-
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
         }
     }
 }

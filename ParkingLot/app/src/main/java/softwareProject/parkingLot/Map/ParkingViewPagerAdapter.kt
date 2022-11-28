@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -45,12 +46,13 @@ class ParkingViewPagerAdapter : ListAdapter<Parking, ParkingViewPagerAdapter.Ite
             var parkingDB = FirebaseDatabase.getInstance().getReference().child("Parking")
             parkingDB.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.child(parking.id.toString()).child("user").value == null) {
+                    if (snapshot.child(parking.id.toString()).child("name").value == null) {
+//                        Log.d("test2", snapshot.child(parking.id.toString()).child("name").value.toString())
                         countTextView.text = "0"+"/"+parking.num // 카운팅 수와 전체 자리수
                         fullCheckTextView.text = "여유" // 임의로 설정
                     }
                     else {
-                        Log.d("test", snapshot.child(parking.id.toString()).child("user").value.toString())
+//                        Log.d("test", snapshot.child(parking.id.toString()).child("name").value.toString())
                         var num = snapshot.child(parking.id.toString()).child("counting").value
                         countTextView.text = num.toString()+"/"+parking.num // 카운팅 수와 전체 자리수
                         if(num.toString().toInt()>=parking.num.toInt()) {
