@@ -93,21 +93,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="25dp" />
                         </TableRow>
-
-                        <TableRow>
-
-                            <TextView
-                                android:text="추가요금"
-                                android:textColor="@color/black"
-                                android:textSize="25dp" />
-
-                            <TextView
-                                android:gravity="right"
-                                android:text="10분 1,000원"
-                                android:textColor="@color/black"
-                                android:textSize="25dp" />
-                            />
-                        </TableRow>
                     </TableLayout>
                 </LinearLayout>
 
@@ -134,30 +119,92 @@
                         <TableRow>
 
                             <TextView
-                                android:text="기본요금"
+                                android:text="평일 오픈"
                                 android:textColor="@color/black"
                                 android:textSize="25dp" />
 
                             <TextView
+                                android:id="@+id/opentime_weekday"
                                 android:gravity="right"
-                                android:text="60분 3,000원"
+                                android:text="00:00"
                                 android:textColor="@color/black"
                                 android:textSize="25dp" />
-                        </TableRow>
 
+                        </TableRow>
                         <TableRow>
 
                             <TextView
-                                android:text="추가요금"
+                                android:text="평일 마감"
                                 android:textColor="@color/black"
                                 android:textSize="25dp" />
 
                             <TextView
+                                android:id="@+id/closetime_weekday"
                                 android:gravity="right"
-                                android:text="10분 1,000원"
+                                android:text="00:00"
                                 android:textColor="@color/black"
                                 android:textSize="25dp" />
-                            />
+
+                        </TableRow>
+                        <TableRow>
+
+                            <TextView
+                                android:text="토요일 오픈"
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
+                            <TextView
+                                android:id="@+id/opentime_saturday"
+                                android:gravity="right"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
+                        </TableRow>
+                        <TableRow>
+
+                            <TextView
+                                android:text="토요일 마감"
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
+                            <TextView
+                                android:id="@+id/closetime_saturday"
+                                android:gravity="right"
+                                android:text="00:00"
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
+                        </TableRow>
+                        <TableRow>
+
+                            <TextView
+                                android:text="공휴일 오픈"
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
+                            <TextView
+                                android:id="@+id/opentime_holiday"
+                                android:gravity="right"
+                                android:text="00:00"
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
+                        </TableRow>
+                        <TableRow>
+
+                            <TextView
+                                android:text="공휴일 마감"
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
+                            <TextView
+                                android:id="@+id/closetime_holiday"
+                                android:gravity="right"
+                                android:text="00:00"
+                                android:textColor="@color/black"
+                                android:textSize="25dp" />
+
                         </TableRow>
                     </TableLayout>
                 </LinearLayout>
