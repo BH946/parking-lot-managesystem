@@ -40,7 +40,7 @@ class ParkingInfoActivity : AppCompatActivity() {
         initView()
         setViewText()
         setListener()
-        printParkingData()
+//        printParkingData()
 
 
     }
@@ -67,7 +67,6 @@ class ParkingInfoActivity : AppCompatActivity() {
         parking_tel.setText(parking.tel)
 
         openTime_weekday.setText(parking.weekdayStartTime)
-        Log.d("opentime", parking.weekdayStartTime)
         closeTime_weekday.setText(parking.weekdayEndTime)
         openTime_saturday.setText(parking.saturdayStartTime)
         closeTime_saturday.setText(parking.saturdayEndTime)
@@ -93,7 +92,6 @@ class ParkingInfoActivity : AppCompatActivity() {
             var size =
                 it.child("Parking").child(parking.id.toString()).child("size").getValue()
                     .toString().toInt()
-            Log.d("counting", counting.toString())
             if (counting >= size) {
                 btn_showReservationActivity.isEnabled = false
                 Toast.makeText(this, "예약 가능한 자리가 없습니다", Toast.LENGTH_LONG).show()
@@ -101,26 +99,25 @@ class ParkingInfoActivity : AppCompatActivity() {
         }
     }
 
-
     fun printParkingData() {
-        Log.d("parking data!!!!!!", parking.id.toString());
-        Log.d("parking data!!!!!!", parking.name);
-        Log.d("parking data!!!!!!", parking.lat);
-        Log.d("parking data!!!!!!", parking.lon);
-        Log.d("parking data!!!!!!", parking.category);
-        Log.d("parking data!!!!!!", parking.way);
-        Log.d("parking data!!!!!!", parking.area);
-        Log.d("parking data!!!!!!", parking.road);
-        Log.d("parking data!!!!!!", parking.num);
-        Log.d("parking data!!!!!!", parking.day);
-        Log.d("운영시간!!!!!!!!!!!!!", parking.weekdayStartTime);
-        Log.d("운영시간!!!!!!!!!!!!!", parking.weekdayEndTime);
-        Log.d("운영시간!!!!!!!!!!!!!", parking.saturdayStartTime);
-        Log.d("운영시간!!!!!!!!!!!!!", parking.saturdayEndTime);
-        Log.d("운영시간!!!!!!!!!!!!!", parking.holidayStartTime);
-        Log.d("parking data!!!!!!", parking.holidayEndTime);
-        Log.d("parking data!!!!!!", parking.cost);
-        Log.d("parking data!!!!!!", parking.tel);
+        Log.d("parking_data", parking.id.toString());
+        Log.d("parking_data", parking.name);
+        Log.d("parking_data", parking.lat);
+        Log.d("parking_data", parking.lon);
+        Log.d("parking_data", parking.category);
+        Log.d("parking_data", parking.way);
+        Log.d("parking_data", parking.area);
+        Log.d("parking_data", parking.road);
+        Log.d("parking_data", parking.num);
+        Log.d("parking_data", parking.day);
+        Log.d("parking_data", parking.weekdayStartTime);
+        Log.d("parking_data", parking.weekdayEndTime);
+        Log.d("parking_data", parking.saturdayStartTime);
+        Log.d("parking_data", parking.saturdayEndTime);
+        Log.d("parking_data", parking.holidayStartTime);
+        Log.d("parking_data", parking.holidayEndTime);
+        Log.d("parking_data", parking.cost);
+        Log.d("parking_data", parking.tel);
     }
 
 }
