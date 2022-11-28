@@ -1,20 +1,28 @@
 package softwareProject.parkingLot.User
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.CalendarView
-import android.widget.NumberPicker
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import softwareProject.parkingLot.Map.MapActivity
+import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
 import java.util.*
 import java.util.Calendar.*
 
 class ReservationActivity : AppCompatActivity() {
+    val database = FirebaseDatabase.getInstance()
+    val parkingDB = database.getReference()
+    lateinit var parking: Parking
 
     lateinit var selectDate: TextView
     lateinit var selectTime: TextView
@@ -22,6 +30,7 @@ class ReservationActivity : AppCompatActivity() {
     lateinit var timePicker: TimePicker
     lateinit var selectReservationTime: TextView
     lateinit var numberPicker: NumberPicker
+    lateinit var btnReservation: Button
 
     var cal_already_ON = false
     var tPicker_already_ON = false
@@ -34,8 +43,41 @@ class ReservationActivity : AppCompatActivity() {
         title = "예약등록"
 
         setViewId()
-        viewInit()
+        initView()
+        setListener()
 
+
+    }
+
+    fun setViewId() {
+        selectDate = findViewById(R.id.selectDate)
+        calView = findViewById<CalendarView>(R.id.calView)
+        selectTime = findViewById(R.id.selectTime)
+        timePicker = findViewById(R.id.timePicker)
+        selectReservationTime = findViewById(R.id.selectReservationTime)
+        numberPicker = findViewById(R.id.numberPicker)
+        btnReservation = findViewById(R.id.btn_reservation)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun initView() {
+        parking = intent.getSerializableExtra("parking") as Parking
+
+        calView.visibility = View.GONE
+        timePicker.visibility = View.GONE
+        numberPicker.visibility = View.GONE
+
+        val cal: Calendar = Calendar.getInstance()
+        val month = (cal.get(Calendar.MONTH) + 1).toString()
+        val date = cal.get(Calendar.DATE).toString()
+        val dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+        numberPicker.minValue = 1
+        numberPicker.maxValue = 12
+
+        selectDate.setText("${month}월 ${date}일 (${dayOfWeek})")
+    }
+
+    fun setListener() {
         selectDate.setOnClickListener(View.OnClickListener {
             if (cal_already_ON) {
                 selectDate.setTypeface(null, Typeface.NORMAL)
@@ -95,32 +137,28 @@ class ReservationActivity : AppCompatActivity() {
             selectReservationTime.setText("${i2} 시간")
 
         }
+        btnReservation.setOnClickListener {
+            parkingDB.get().addOnSuccessListener {
+                var counting =
+                    it.child("Parking").child(parking.id.toString()).child("counting").getValue()
+                        .toString().toInt()
+                Log.d("counting", counting.toString())
+                if (counting == null) {
+                    parkingDB.child("Parking").child(parking.id.toString()).child("counting")
+                        .setValue(1)
+                    Log.d("counting+1", "1")
+                } else {
+                    counting += 1
+                    parkingDB.child("Parking").child(parking.id.toString()).child("counting")
+                        .setValue(counting)
+                    Log.d("counting+1", counting.toString())
+                }
+                val intent = Intent(this, MapActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+
     }
-
-    fun setViewId() {
-        selectDate = findViewById(R.id.selectDate)
-        calView = findViewById<CalendarView>(R.id.calView)
-        selectTime = findViewById(R.id.selectTime)
-        timePicker = findViewById(R.id.timePicker)
-        selectReservationTime = findViewById(R.id.selectReservationTime)
-        numberPicker = findViewById(R.id.numberPicker)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun viewInit() {
-        calView.visibility = View.GONE
-        timePicker.visibility = View.GONE
-        numberPicker.visibility = View.GONE
-
-        val cal: Calendar = Calendar.getInstance()
-        val month = (cal.get(Calendar.MONTH) + 1).toString()
-        val date = cal.get(Calendar.DATE).toString()
-        val dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
-        numberPicker.minValue = 1
-        numberPicker.maxValue = 12
-
-        selectDate.setText("${month}월 ${date}일 (${dayOfWeek})")
-    }
-
 
 }
