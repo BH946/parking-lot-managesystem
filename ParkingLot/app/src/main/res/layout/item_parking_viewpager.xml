@@ -23,7 +23,7 @@
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/thumbnailImageView"
-            android:background="@drawable/parking_space"
+            android:background="@drawable/bbaicon"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
         <LinearLayout
