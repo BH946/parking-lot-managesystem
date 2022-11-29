@@ -115,28 +115,28 @@ class ReservationActivity : AppCompatActivity() {
         })
 
         calView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            reservation_Calendar = Calendar.getInstance()
-            reservation_Calendar.set(year, month, dayOfMonth)
-            val day: String = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+            reservation_Calendar.apply {
+                set(Calendar.YEAR,year)
+                set(Calendar.MONTH,month)
+                set(Calendar.DAY_OF_MONTH,dayOfMonth)
+            }
+            val day = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
 
             selectDate.setText("${month + 1}월 ${dayOfMonth}일 (${day})")
         }
         timePicker.setOnTimeChangedListener { view, hour, min ->
-            reservation_Calendar.set(
-                reservation_Calendar[Calendar.YEAR],
-                reservation_Calendar[Calendar.MONTH],
-                reservation_Calendar[Calendar.DAY_OF_MONTH],
-                hour,
-                min,
-                0
-            )
-
+            reservation_Calendar.apply {
+                set(Calendar.HOUR, hour)
+                set(Calendar.MINUTE, hour)
+            }
             selectTime.setText("${hour}시 ${min}분")
         }
         // 예약하기 버튼 클릭 리스너
         btnReservation.setOnClickListener {
             // 현재시간보다 과거시간을 예약할 경우 알림
-            if (reservation_Calendar.timeInMillis.toInt() < current_Calendar.timeInMillis.toInt()) {
+            current_Calendar = Calendar.getInstance()
+            if (reservation_Calendar.timeInMillis.toInt() + 60000 < current_Calendar.timeInMillis.toInt()) {
+                // 현재시간과 예약시간의 1분차이까지는 허용
                 Toast.makeText(this, "예약 날짜,시간을 확인해 주세요", Toast.LENGTH_LONG).show()
             } else {
                 // DB에 데이터 저장
