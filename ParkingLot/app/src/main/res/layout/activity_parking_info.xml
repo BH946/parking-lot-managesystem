@@ -142,7 +142,7 @@
                             <TextView
                                 android:id="@+id/opentime_weekday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
                                 android:letterSpacing="0.05"
@@ -161,7 +161,7 @@
                             <TextView
                                 android:id="@+id/closetime_weekday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
                                 android:letterSpacing="0.05"
@@ -180,7 +180,7 @@
                             <TextView
                                 android:id="@+id/opentime_saturday"
                                 android:gravity="right"
-                                android:text=""
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
                                 android:letterSpacing="0.05"
@@ -199,7 +199,7 @@
                             <TextView
                                 android:id="@+id/closetime_saturday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
                                 android:letterSpacing="0.05"
@@ -218,7 +218,7 @@
                             <TextView
                                 android:id="@+id/opentime_holiday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
                                 android:letterSpacing="0.05"
@@ -236,7 +236,7 @@
                             <TextView
                                 android:id="@+id/closetime_holiday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
                                 android:fontFamily="@font/font"/>
