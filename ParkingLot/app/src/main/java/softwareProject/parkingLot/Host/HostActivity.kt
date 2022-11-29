@@ -5,8 +5,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
 import java.util.*
@@ -70,18 +69,36 @@ class HostActivity : AppCompatActivity() {
             }
         }
 
-        parkingDB.get().addOnSuccessListener {
-            numberRest.text =
-                it.child("Parking").child(number.toString()).child("counting").getValue()
-                    .toString()
+        parkingDB.child("Parking").child(number.toString())
+                .addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.child("counting").value != null) {
+                            numberRest.text =
+                                    snapshot.child("counting").value.toString()
+                            numberAll.text=
+                                    snapshot.child("size").value.toString()
+                            resUserNum=
+                                    snapshot.child("counting").value.toString().toInt()
+                            allUserNum=
+                                    snapshot.child("size").value.toString().toInt()
+                        }
+
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
+       /* parkingDB.get().addOnSuccessListener {
             numberRest.text =
                 it.child("Parking").child(number.toString()).child("counting").getValue()
                     .toString()
             numberAll.text=
                 it.child("Parking").child(number.toString()).child("size").getValue()
                     .toString()
-
-        }
+            resUserNum=
+                    it.child("Parking").child(number.toString()).child("counting").getValue().toString().toInt()
+            allUserNum=
+                    it.child("Parking").child(number.toString()).child("size").getValue().toString().toInt()
+        }*/
 
 
 
@@ -92,8 +109,7 @@ class HostActivity : AppCompatActivity() {
             if (resUserNum == allUserNum) {
                 check.isClickable = false
             }
-            parkingDB.child("Parking").child(number.toString()).child("counting")
-                .setValue(numberRest.text.toString())
+            parkingDB.child("Parking").child(number.toString()).child("counting").setValue(resUserNum.toString())
         }
 
         out.setOnClickListener {
@@ -103,10 +119,10 @@ class HostActivity : AppCompatActivity() {
             if (resUserNum == 0) {
                 out.isClickable = false
             }
-            parkingDB.child("Parking").child(number.toString()).child("counting")
-                .setValue(numberAll.text.toString())
+            parkingDB.child("Parking").child(number.toString()).child("counting").setValue(resUserNum.toString())
         }
 
+        //parkingDB.child("Parking").child(number.toString()).child("counting").setValue(resUserNum.toString())
 
     }
 }
