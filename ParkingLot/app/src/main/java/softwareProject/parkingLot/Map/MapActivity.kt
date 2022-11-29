@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -25,6 +26,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import softwareProject.parkingLot.R
 import softwareProject.parkingLot.User.ReservationActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
     private lateinit var parking : Parking
@@ -45,6 +48,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
     private lateinit var user_name : TextView
     private lateinit var parking_lot_name : TextView
     private lateinit var startTime : TextView
+    private lateinit var remainingTime : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -214,6 +218,9 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         user_name = findViewById<TextView>(R.id.user_name)
         parking_lot_name = findViewById<TextView>(R.id.parking_lot_name)
         startTime = findViewById<TextView>(R.id.startTime)
+        remainingTime = findViewById<TextView>(R.id.remainingTime)
+
+        var calCurrent = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
 
         // realtime db -> 없으면 알아서 생성
         val parkingDB = FirebaseDatabase.getInstance().getReference().child("user")
@@ -223,6 +230,10 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
                 user_name.text = snapshot.child(currentUser).child("name").value.toString()
                 parking_lot_name.text = snapshot.child(currentUser).child("parking_name").value.toString()
                 startTime.text = snapshot.child(currentUser).child("reservation_time").value.toString()
+                calCurrent.timeInMillis = calCurrent.timeInMillis - snapshot.child(currentUser).child("reservation_time_mills").value.toString().toLong()
+
+                remainingTime.text = "${calCurrent.timeInMillis/(1000*60*60)} : " + "${calCurrent.timeInMillis/(1000*60)%60}"
+
             }
             override fun onCancelled(error: DatabaseError) {}
         })
