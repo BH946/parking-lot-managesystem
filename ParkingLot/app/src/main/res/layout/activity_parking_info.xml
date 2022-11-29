@@ -231,6 +231,7 @@
                                 android:text="공휴일 마감"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                             <TextView
@@ -239,6 +240,7 @@
                                 android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                         </TableRow>
