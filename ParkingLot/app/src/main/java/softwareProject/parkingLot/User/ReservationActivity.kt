@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginLeft
+import androidx.core.view.setPadding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -41,6 +43,9 @@ class ReservationActivity : AppCompatActivity() {
     var cal_already_ON = false
     var tPicker_already_ON = false
 
+    // 캘린더 객체
+    lateinit var cal: Calendar
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,12 +74,18 @@ class ReservationActivity : AppCompatActivity() {
         calView.visibility = View.GONE
         timePicker.visibility = View.GONE
 
-        val cal: Calendar = Calendar.getInstance()
+        // 기본 예약 날짜 설정
+        cal = Calendar.getInstance()
         val month = (cal.get(Calendar.MONTH) + 1).toString()
         val date = cal.get(Calendar.DATE).toString()
         val dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
-
         selectDate.setText("${month}월 ${date}일 (${dayOfWeek})")
+
+        // 기본 예약 시간 설정
+        timePicker.setIs24HourView(true)
+        var hour = timePicker.hour
+        var minute = timePicker.minute
+        selectTime.setText("${hour}시 ${minute}분")
     }
 
     fun setListener() {
@@ -106,18 +117,23 @@ class ReservationActivity : AppCompatActivity() {
         })
 
         calView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            val cal: Calendar = Calendar.getInstance()
+            cal = Calendar.getInstance()
             cal.set(year, month, dayOfMonth)
             val day: String = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
 
             selectDate.setText("${month + 1}월 ${dayOfMonth}일 (${day})")
         }
         timePicker.setOnTimeChangedListener { view, hour, min ->
-            if (hour < 12) {
-                selectTime.setText("오전 ${hour}:${min}")
-            } else {
-                selectTime.setText("오후 ${hour - 12}:${min}")
-            }
+            cal.set(
+                cal[Calendar.YEAR],
+                cal[Calendar.MONTH],
+                cal[Calendar.DAY_OF_MONTH],
+                hour,
+                min,
+                0
+            )
+
+            selectTime.setText("${hour}시 ${min}분")
         }
         // 예약하기 버튼 클릭 시
         btnReservation.setOnClickListener {
@@ -138,7 +154,11 @@ class ReservationActivity : AppCompatActivity() {
                     .setValue(parking.name.toString())
                 // user -> id -> reservation_time에 예약시간 저장
                 parkingDB.child("user").child(currentUser).child("reservation_time")
-                    .setValue(selectDate.text.toString() +" "+ selectTime.text.toString())
+                    .setValue(selectDate.text.toString() + " " + selectTime.text.toString())
+                // user -> id -> reservation_time_mills에 예약시간 저장
+                parkingDB.child("user").child(currentUser).child("reservation_time_mills")
+                    .setValue(cal.timeInMillis.toString())
+                Log.d("cal!!", cal.timeInMillis.toString())
 
                 // 예약자수+1 후 DB에 저장
                 counting += 1
