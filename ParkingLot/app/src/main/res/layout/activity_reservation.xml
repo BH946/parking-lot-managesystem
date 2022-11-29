@@ -49,6 +49,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10px"
                         android:text="예약 날짜"
                         android:textSize="20dp" />
 
@@ -57,6 +59,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:padding="10px"
+                        android:layout_centerVertical="true"
                         android:text="11월 9일 (수)"
                         android:textSize="20dp" />
                 </RelativeLayout>
@@ -99,6 +103,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10px"
                         android:text="예약 시간"
                         android:textSize="20dp" />
 
@@ -107,7 +113,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="오전 8:00"
+                        android:layout_centerVertical="true"
+                        android:padding="10px"
+                        android:text="x시 x분"
                         android:textSize="20dp" />
                 </RelativeLayout>
 
