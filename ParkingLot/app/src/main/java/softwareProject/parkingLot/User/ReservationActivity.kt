@@ -21,6 +21,7 @@ import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
 import java.util.*
 import java.util.Calendar.*
+import kotlin.math.min
 
 class ReservationActivity : AppCompatActivity() {
     // DB 객체 설정
@@ -45,6 +46,12 @@ class ReservationActivity : AppCompatActivity() {
 
     // 캘린더 객체
     lateinit var cal: Calendar
+    lateinit var current_month: String
+    lateinit var current_date: String
+    lateinit var current_dayOfWeek: String
+    lateinit var current_hour: String
+    lateinit var current_minute: String
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,27 +83,25 @@ class ReservationActivity : AppCompatActivity() {
 
         // 기본 예약 날짜 설정
         cal = Calendar.getInstance()
-        val month = (cal.get(Calendar.MONTH) + 1).toString()
-        val date = cal.get(Calendar.DATE).toString()
-        val dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
-        selectDate.setText("${month}월 ${date}일 (${dayOfWeek})")
+        current_month = (cal.get(Calendar.MONTH) + 1).toString()
+        current_date = cal.get(Calendar.DATE).toString()
+        current_dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+        selectDate.setText("${current_month}월 ${current_date}일 (${current_dayOfWeek})")
 
         // 기본 예약 시간 설정
         timePicker.setIs24HourView(true)
-        var hour = timePicker.hour
-        var minute = timePicker.minute
-        selectTime.setText("${hour}시 ${minute}분")
+        current_hour = timePicker.hour.toString()
+        current_minute = timePicker.minute.toString()
+        selectTime.setText("${current_hour}시 ${current_minute}분")
     }
 
     fun setListener() {
         selectDate.setOnClickListener(View.OnClickListener {
             if (cal_already_ON) {
-                selectDate.setTypeface(null, Typeface.NORMAL)
                 selectDate.setBackgroundResource(R.drawable.button_click_off)
                 calView.visibility = View.GONE
                 cal_already_ON = false
             } else {
-                selectDate.setTypeface(null, Typeface.BOLD)
                 selectDate.setBackgroundResource(R.drawable.button_click_on)
                 calView.visibility = View.VISIBLE
                 cal_already_ON = true
@@ -104,12 +109,10 @@ class ReservationActivity : AppCompatActivity() {
         })
         selectTime.setOnClickListener(View.OnClickListener {
             if (tPicker_already_ON) {
-                selectTime.setTypeface(null, Typeface.NORMAL)
                 selectTime.setBackgroundResource(R.drawable.button_click_off)
                 timePicker.visibility = View.GONE
                 tPicker_already_ON = false
             } else {
-                selectTime.setTypeface(null, Typeface.BOLD)
                 selectTime.setBackgroundResource(R.drawable.button_click_on)
                 timePicker.visibility = View.VISIBLE
                 tPicker_already_ON = true
