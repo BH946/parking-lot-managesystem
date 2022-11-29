@@ -47,6 +47,7 @@ class HostActivity : AppCompatActivity() {
         //Log.d("txt확인",txt+","+txt1)
 
         val number = intent.getStringExtra("number")
+        var cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
         y = cal[Calendar.YEAR]
         m = cal[Calendar.MONTH] + 1
         d = cal[Calendar.DAY_OF_MONTH]

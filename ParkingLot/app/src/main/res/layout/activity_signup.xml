@@ -24,7 +24,7 @@
             android:text="회 원 가 입"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/font" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -82,10 +82,10 @@
             android:color="#3C3F41"
             android:gravity="center"
             android:radius="50dp"
-            android:text="가입하기"
+            android:text="가   입   하   기"
             android:textColor="#000000"
-            android:textStyle="bold"
-            app:backgroundTint="#CF6679" />
+            app:backgroundTint="#D391A7"
+            android:fontFamily="@font/font"/>
 
 
     </LinearLayout>
