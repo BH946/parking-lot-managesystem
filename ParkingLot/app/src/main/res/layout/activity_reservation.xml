@@ -116,7 +116,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="오전 8:00"
+                        android:layout_centerVertical="true"
+                        android:padding="10px"
+                        android:text="x시 x분"
                         android:textSize="20dp"
                         android:fontFamily="@font/font"/>
                 </RelativeLayout>
