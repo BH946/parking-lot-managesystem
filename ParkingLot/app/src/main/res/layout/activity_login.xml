@@ -13,10 +13,11 @@
         android:layout_height="67dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="L 0 G I N"
+        android:text="\nL 0 G I N"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/font"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -25,51 +26,59 @@
         android:src="@drawable/bbaicon" />
 
     <LinearLayout
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
-            android:layout_width="66dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="ID "
             android:textColor="#FFFFFF"
             android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/font"/>
 
         <EditText
             android:id="@+id/ID"
-            android:layout_width="310dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
             android:text="test@test.com"
             android:hint="ID"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/font"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_gravity="center">
 
         <TextView
-            android:layout_width="66dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="PW "
             android:textColor="#FFFFFF"
             android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/font"/>
 
         <EditText
             android:id="@+id/PW"
-            android:layout_width="310dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
             android:hint="PW"
             android:text="test1234"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/font"/>
     </LinearLayout>
 
 
@@ -84,10 +93,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:text="로그인"
+        android:text="로   그   인"
         android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:background="@drawable/btn_login" />
+        android:background="@drawable/btn_login"
+        android:fontFamily="@font/font"/>
 
 
     <LinearLayout
@@ -95,25 +104,32 @@
         android:layout_height="82dp"
         android:layout_gravity="center"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp">
 
         <TextView
             android:id="@+id/sign_up"
-            android:layout_width="190dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_gravity="left"
             android:text="회원가입 "
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <TextView
             android:id="@+id/manager_mode"
-            android:layout_width="190dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_gravity="right"
             android:text="관리자 모드"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
 
     </LinearLayout>
 

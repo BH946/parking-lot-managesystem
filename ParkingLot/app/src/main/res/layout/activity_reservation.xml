@@ -52,7 +52,8 @@
                         android:layout_centerVertical="true"
                         android:padding="10px"
                         android:text="예약 날짜"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:fontFamily="@font/font" />
 
                     <TextView
                         android:id="@+id/selectDate"
@@ -62,7 +63,8 @@
                         android:padding="10px"
                         android:layout_centerVertical="true"
                         android:text="11월 9일 (수)"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:fontFamily="@font/font"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -106,17 +108,17 @@
                         android:layout_centerVertical="true"
                         android:padding="10px"
                         android:text="예약 시간"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:fontFamily="@font/font"/>
 
                     <TextView
                         android:id="@+id/selectTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:padding="10px"
-                        android:text="x시 x분"
-                        android:textSize="20dp" />
+                        android:text="오전 8:00"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/font"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -148,13 +150,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
+        <android.widget.Button
             android:id="@+id/btn_reservation"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:text="예약하기"
-            android:textSize="20dp"/>
+            android:text="예 약 하 기"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:fontFamily="@font/font"
+            android:background="@drawable/btn_login" />
     </RelativeLayout>
 </LinearLayout>
