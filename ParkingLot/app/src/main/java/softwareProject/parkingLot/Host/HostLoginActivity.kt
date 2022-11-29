@@ -23,7 +23,7 @@ class HostLoginActivity : AppCompatActivity() {
         initLoginButton()
 
         dbRef = FirebaseDatabase.getInstance().reference
-//        dbRef.child("host").child("5678").setValue(HostDB("부산대 주차장","5678","김철수"))
+
     }
     private fun initLoginButton() {
         btn = findViewById<Button>(R.id.btn_host)
@@ -31,6 +31,7 @@ class HostLoginActivity : AppCompatActivity() {
             val number = findViewById<EditText>(R.id.Number).text
             val intent= Intent(applicationContext, HostActivity::class.java)
 
+            intent.putExtra("number",number.toString())
             if (TextUtils.isEmpty(number)) {
                 Toast.makeText(this,"정보를 바르게 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener;

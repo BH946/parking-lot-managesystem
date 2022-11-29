@@ -15,19 +15,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="붕붕아를 이용하여\n정보를 한눈에!"
+        android:text="붕붕아를 이용하여\n\n정보를 한눈에!"
         android:textColor="#fee257"
         android:textSize="33dp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/font"/>
 
     <TextView
         android:layout_width="257dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="주차장 이용 정보를\n편리하게 확인하고 관리해보세요.\n\n\n\n"
+        android:text="주차장 이용 정보를\n\n편리하게 확인하고 관리해보세요.\n\n\n\n"
         android:textColor="#e3b104"
         android:textSize="18dp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:fontFamily="@font/font"/>
 
     <EditText
         android:id="@+id/Number"
@@ -36,7 +37,8 @@
         android:backgroundTint="#e3b104"
         android:layout_gravity="center"
         android:hint="주차장식별번호를 입력해주세요"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/font"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -48,8 +50,8 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:background="@drawable/btn_host"
-        android:text="확인"
-        android:textStyle="bold" />
+        android:text="관       리       하       기"
+        android:fontFamily="@font/font"/>
 
     <TextView
         android:layout_width="match_parent"

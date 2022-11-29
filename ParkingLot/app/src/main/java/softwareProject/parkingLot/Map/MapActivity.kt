@@ -54,7 +54,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
         mapView.onCreate(savedInstanceState) // 액티비티 만들때 onCreate()는 반드시 호출
-        title = "붕붕이"
+        title = "붕붕아"
 
         initFun()
 
@@ -278,5 +278,6 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         // 권한 상태코드
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
+
 
 }

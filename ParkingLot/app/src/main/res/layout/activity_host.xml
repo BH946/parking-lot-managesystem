@@ -28,17 +28,19 @@
             android:layout_gravity="center"
             android:text="관리자"
             android:textColor="#FFEB3B"
-            android:textSize="24dp" />
+            android:textSize="24dp"
+            android:fontFamily="@font/font"/>
 
         <TextView
             android:id="@+id/manage1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="관리자님!"
+            android:text=" 관리자님!"
             android:textColor="#FFFFFF"
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/font"/>
     </LinearLayout>
 
     <!--    붕붕아 구분선-->
@@ -72,7 +74,6 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/smile1" />
 
@@ -82,7 +83,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text=" 얼른 예약\n 확인 부탁드려요!"
+                    android:text=" 얼른 예약\n\n 확인 부탁드려요!"
+                    android:fontFamily="@font/font"
                     android:textColor="#FFEB3B"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -111,7 +113,8 @@
                     android:layout_height="wrap_content"
                     android:text="예약자"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:fontFamily="@font/font"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,7 +122,8 @@
                     android:text=" 님 "
                     android:textColor="#ffffff"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -162,17 +166,19 @@
                     android:text="P"
                     android:textColor="#FFEB3B"
                     android:textSize="50dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"/>
 
                 <TextView
                     android:id="@+id/now"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="주차장 현황"
+                    android:text=" 주차장 현황"
                     android:textColor="#FFEB3B"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"/>
             </LinearLayout>
 
             <LinearLayout
@@ -189,7 +195,8 @@
                     android:layout_weight="1"
                     android:text="총  자리  수   : "
                     android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:fontFamily="@font/font"/>
 
                 <TextView
                     android:id="@+id/numberAll"
@@ -198,7 +205,8 @@
                     android:layout_weight="1"
                     android:text="0"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:fontFamily="@font/font"/>
             </LinearLayout>
 
             <LinearLayout
@@ -216,7 +224,8 @@
                     android:layout_weight="1"
                     android:text="현재 차량 수 : "
                     android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:fontFamily="@font/font"/>
 
                 <TextView
                     android:id="@+id/numberRest"
@@ -225,30 +234,10 @@
                     android:layout_weight="1"
                     android:text="0"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:fontFamily="@font/font"/>
 
             </LinearLayout>
-
-            <EditText
-                android:id="@+id/edit"
-                android:layout_width="159dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="#e3b104"
-                android:gravity="center_horizontal"
-                android:inputType="number"
-                android:text="0"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF" />
-
-            <android.widget.Button
-                android:id="@+id/set"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_host"
-                android:text="설정하기" />
 
             <TextView
                 android:id="@+id/blank1"
@@ -264,7 +253,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/btn_host"
-                android:text="예약확인" />
+                android:text="예 약 확 인"
+                android:fontFamily="@font/font"/>
 
             <TextView
                 android:id="@+id/blank"
@@ -280,7 +270,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/btn_host"
-                android:text="출차하기" />
+                android:text="출 차 하 기"
+                android:fontFamily="@font/font"/>
 
             <TextView
                 android:id="@+id/blank2"
@@ -300,7 +291,8 @@
         android:text="시간"
         android:textAlignment="center"
         android:textColor="#e3b104"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:fontFamily="@font/font"/>
 
 
 </LinearLayout>
