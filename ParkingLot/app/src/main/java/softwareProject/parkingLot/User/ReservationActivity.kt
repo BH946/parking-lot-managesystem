@@ -152,33 +152,25 @@ class ReservationActivity : AppCompatActivity() {
             } else {
                 // DB에 데이터 저장
                 parkingDB.get().addOnSuccessListener {
-                    // user -> [currentUser] -> name 값 받아오기
+                    // User DB에서 현재 사용자의 이름 가져옴
                     val currentUser_name =
                         it.child("user").child(currentUser).child("name").getValue().toString()
-                    // Parking -> [parking.id] -> counting 값 받아오기
+                    // Parking DB에서 현재 주차자리 수 가져오기
                     var counting =
-                        it.child("Parking").child(parking.id.toString()).child("counting")
-                            .getValue()
-                            .toString().toInt()
+                        it.child("Parking").child(parking.id.toString()).child("counting").getValue().toString().toInt()
 
-                    // host -> parking id -> reservation_user에 유저 닉네임으로 설정
-                    parkingDB.child("host").child(parking.id.toString()).child("reservation_user")
-                        .setValue(currentUser_name)
-                    // user -> id -> reservation에 예약한 주차장 id 저장
-                    parkingDB.child("user").child(currentUser).child("parking_name")
-                        .setValue(parking.name.toString())
-                    // user -> id -> reservation_time에 예약시간 저장
+                    // Host DB에 예약한 유저 닉네임 등록
+                    parkingDB.child("host").child(parking.id.toString()).child("reservation_user").setValue(currentUser_name)
+                    // User DB에 예약한 주차장 id 등록
+                    parkingDB.child("user").child(currentUser).child("parking_name").setValue(parking.name.toString())
+                    // User DB에 예약 시간 등록
                     parkingDB.child("user").child(currentUser).child("reservation_time")
                         .setValue(selectDate.text.toString() + " " + selectTime.text.toString())
-                    // user -> id -> reservation_time_mills에 예약시간 저장
+                    // User DB에 ms로 변환한 예약시간 등록
                     parkingDB.child("user").child(currentUser).child("reservation_time_mills")
                         .setValue(reservation_Calendar.timeInMillis.toString())
-                    Log.d("cal!!", reservation_Calendar.timeInMillis.toString())
-
-                    // 예약자수+1 후 DB에 저장
-                    counting += 1
-                    parkingDB.child("Parking").child(parking.id.toString()).child("counting")
-                        .setValue(counting)
+                    // Parking DB에 주차자리 추가
+                    parkingDB.child("Parking").child(parking.id.toString()).child("counting").setValue(counting + 1)
 
                     // 첫 화면으로 돌아감
                     val intent = Intent(this, MapActivity::class.java)
