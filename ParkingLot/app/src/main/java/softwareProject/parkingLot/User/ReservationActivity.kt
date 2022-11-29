@@ -174,6 +174,7 @@ class ReservationActivity : AppCompatActivity() {
 
                     // 첫 화면으로 돌아감
                     val intent = Intent(this, MapActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                 }
             }
