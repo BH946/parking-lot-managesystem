@@ -3,6 +3,7 @@ package softwareProject.parkingLot.User
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Debug
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -40,11 +41,9 @@ class ReservationActivity : AppCompatActivity() {
     // 캘린더 객체
     lateinit var current_Calendar: Calendar
     lateinit var reservation_Calendar: Calendar
-    lateinit var current_month: String
-    lateinit var current_date: String
-    lateinit var current_dayOfWeek: String
-    lateinit var current_hour: String
-    lateinit var current_minute: String
+
+    // 테스트 코드
+    val TEST = true
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -72,21 +71,32 @@ class ReservationActivity : AppCompatActivity() {
     fun initView() {
         parking = intent.getSerializableExtra("parking") as Parking
 
+        // 캘린더뷰, 타임피커 숨기기
         calView.visibility = View.GONE
         timePicker.visibility = View.GONE
 
-        // 기본 예약 날짜 설정
+        // 현재시간, 예약시간 설정, 예약시간은 현재시간으로부터 1시간 추가
         current_Calendar = Calendar.getInstance()
         reservation_Calendar = Calendar.getInstance()
-        current_month = (reservation_Calendar.get(Calendar.MONTH) + 1).toString()
-        current_date = reservation_Calendar.get(Calendar.DATE).toString()
-        current_dayOfWeek = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+
+        // 예약시간은 현재시간으로부터 1시간 추가
+        val reservation_time = current_Calendar.get(Calendar.HOUR) + 1
+        reservation_Calendar.apply { set(Calendar.HOUR, reservation_time) }
+
+        // timePicker 설정
+        timePicker.setIs24HourView(true)
+        timePicker.hour = reservation_Calendar.get(Calendar.HOUR)
+        timePicker.minute = reservation_Calendar.get(Calendar.MINUTE)
+
+        // 예약날짜 TextView 설정
+        val current_month = (reservation_Calendar.get(Calendar.MONTH) + 1).toString()
+        val current_date = reservation_Calendar.get(Calendar.DATE)
+        val current_dayOfWeek = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
         selectDate.setText("${current_month}월 ${current_date}일 (${current_dayOfWeek})")
 
-        // 기본 예약 시간 설정
-        timePicker.setIs24HourView(true)
-        current_hour = timePicker.hour.toString()
-        current_minute = timePicker.minute.toString()
+        // 예약시간 TextView 설정
+        val current_hour = reservation_Calendar.get(Calendar.HOUR)
+        val current_minute = reservation_Calendar.get(Calendar.MINUTE)
         selectTime.setText("${current_hour}시 ${current_minute}분")
     }
 
@@ -116,9 +126,9 @@ class ReservationActivity : AppCompatActivity() {
 
         calView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             reservation_Calendar.apply {
-                set(Calendar.YEAR,year)
-                set(Calendar.MONTH,month)
-                set(Calendar.DAY_OF_MONTH,dayOfMonth)
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
             }
             val day = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
 
@@ -134,8 +144,9 @@ class ReservationActivity : AppCompatActivity() {
         // 예약하기 버튼 클릭 리스너
         btnReservation.setOnClickListener {
             // 현재시간보다 과거시간을 예약할 경우 알림
+            // TEST를 통해 해제 가능
             current_Calendar = Calendar.getInstance()
-            if (reservation_Calendar.timeInMillis.toInt() + 60000 < current_Calendar.timeInMillis.toInt()) {
+            if (TEST && reservation_Calendar.timeInMillis.toInt() + 60000 < current_Calendar.timeInMillis.toInt()) {
                 // 현재시간과 예약시간의 1분차이까지는 허용
                 Toast.makeText(this, "예약 날짜,시간을 확인해 주세요", Toast.LENGTH_LONG).show()
             } else {
