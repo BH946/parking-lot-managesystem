@@ -1,7 +1,6 @@
 package softwareProject.parkingLot.User
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,19 +8,13 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginLeft
-import androidx.core.view.setPadding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import softwareProject.parkingLot.Map.MapActivity
 import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
 import java.util.*
 import java.util.Calendar.*
-import kotlin.math.min
 
 class ReservationActivity : AppCompatActivity() {
     // DB 객체 설정
@@ -45,7 +38,8 @@ class ReservationActivity : AppCompatActivity() {
     var tPicker_already_ON = false
 
     // 캘린더 객체
-    lateinit var cal: Calendar
+    lateinit var current_Calendar: Calendar
+    lateinit var reservation_Calendar: Calendar
     lateinit var current_month: String
     lateinit var current_date: String
     lateinit var current_dayOfWeek: String
@@ -82,10 +76,11 @@ class ReservationActivity : AppCompatActivity() {
         timePicker.visibility = View.GONE
 
         // 기본 예약 날짜 설정
-        cal = Calendar.getInstance()
-        current_month = (cal.get(Calendar.MONTH) + 1).toString()
-        current_date = cal.get(Calendar.DATE).toString()
-        current_dayOfWeek = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+        current_Calendar = Calendar.getInstance()
+        reservation_Calendar = Calendar.getInstance()
+        current_month = (reservation_Calendar.get(Calendar.MONTH) + 1).toString()
+        current_date = reservation_Calendar.get(Calendar.DATE).toString()
+        current_dayOfWeek = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
         selectDate.setText("${current_month}월 ${current_date}일 (${current_dayOfWeek})")
 
         // 기본 예약 시간 설정
@@ -120,17 +115,17 @@ class ReservationActivity : AppCompatActivity() {
         })
 
         calView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            cal = Calendar.getInstance()
-            cal.set(year, month, dayOfMonth)
-            val day: String = cal.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
+            reservation_Calendar = Calendar.getInstance()
+            reservation_Calendar.set(year, month, dayOfMonth)
+            val day: String = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
 
             selectDate.setText("${month + 1}월 ${dayOfMonth}일 (${day})")
         }
         timePicker.setOnTimeChangedListener { view, hour, min ->
-            cal.set(
-                cal[Calendar.YEAR],
-                cal[Calendar.MONTH],
-                cal[Calendar.DAY_OF_MONTH],
+            reservation_Calendar.set(
+                reservation_Calendar[Calendar.YEAR],
+                reservation_Calendar[Calendar.MONTH],
+                reservation_Calendar[Calendar.DAY_OF_MONTH],
                 hour,
                 min,
                 0
@@ -138,39 +133,46 @@ class ReservationActivity : AppCompatActivity() {
 
             selectTime.setText("${hour}시 ${min}분")
         }
-        // 예약하기 버튼 클릭 시
+        // 예약하기 버튼 클릭 리스너
         btnReservation.setOnClickListener {
-            parkingDB.get().addOnSuccessListener {
-                // user -> [currentUser] -> name 값 받아오기
-                val currentUser_name =
-                    it.child("user").child(currentUser).child("name").getValue().toString()
-                // Parking -> [parking.id] -> counting 값 받아오기
-                var counting =
-                    it.child("Parking").child(parking.id.toString()).child("counting").getValue()
-                        .toString().toInt()
+            // 현재시간보다 과거시간을 예약할 경우 알림
+            if (reservation_Calendar.timeInMillis.toInt() < current_Calendar.timeInMillis.toInt()) {
+                Toast.makeText(this, "예약 날짜,시간을 확인해 주세요", Toast.LENGTH_LONG).show()
+            } else {
+                // DB에 데이터 저장
+                parkingDB.get().addOnSuccessListener {
+                    // user -> [currentUser] -> name 값 받아오기
+                    val currentUser_name =
+                        it.child("user").child(currentUser).child("name").getValue().toString()
+                    // Parking -> [parking.id] -> counting 값 받아오기
+                    var counting =
+                        it.child("Parking").child(parking.id.toString()).child("counting")
+                            .getValue()
+                            .toString().toInt()
 
-                // host -> parking id -> reservation_user에 유저 닉네임으로 설정
-                parkingDB.child("host").child(parking.id.toString()).child("reservation_user")
-                    .setValue(currentUser_name)
-                // user -> id -> reservation에 예약한 주차장 id 저장
-                parkingDB.child("user").child(currentUser).child("parking_name")
-                    .setValue(parking.name.toString())
-                // user -> id -> reservation_time에 예약시간 저장
-                parkingDB.child("user").child(currentUser).child("reservation_time")
-                    .setValue(selectDate.text.toString() + " " + selectTime.text.toString())
-                // user -> id -> reservation_time_mills에 예약시간 저장
-                parkingDB.child("user").child(currentUser).child("reservation_time_mills")
-                    .setValue(cal.timeInMillis.toString())
-                Log.d("cal!!", cal.timeInMillis.toString())
+                    // host -> parking id -> reservation_user에 유저 닉네임으로 설정
+                    parkingDB.child("host").child(parking.id.toString()).child("reservation_user")
+                        .setValue(currentUser_name)
+                    // user -> id -> reservation에 예약한 주차장 id 저장
+                    parkingDB.child("user").child(currentUser).child("parking_name")
+                        .setValue(parking.name.toString())
+                    // user -> id -> reservation_time에 예약시간 저장
+                    parkingDB.child("user").child(currentUser).child("reservation_time")
+                        .setValue(selectDate.text.toString() + " " + selectTime.text.toString())
+                    // user -> id -> reservation_time_mills에 예약시간 저장
+                    parkingDB.child("user").child(currentUser).child("reservation_time_mills")
+                        .setValue(reservation_Calendar.timeInMillis.toString())
+                    Log.d("cal!!", reservation_Calendar.timeInMillis.toString())
 
-                // 예약자수+1 후 DB에 저장
-                counting += 1
-                parkingDB.child("Parking").child(parking.id.toString()).child("counting")
-                    .setValue(counting)
+                    // 예약자수+1 후 DB에 저장
+                    counting += 1
+                    parkingDB.child("Parking").child(parking.id.toString()).child("counting")
+                        .setValue(counting)
 
-                // 첫 화면으로 돌아감
-                val intent = Intent(this, MapActivity::class.java)
-                startActivity(intent)
+                    // 첫 화면으로 돌아감
+                    val intent = Intent(this, MapActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 
