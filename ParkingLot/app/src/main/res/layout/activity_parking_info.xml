@@ -58,6 +58,7 @@
                         android:text="부산광역시 사하구 낙동대로"
                         android:textColor="@color/white"
                         android:textSize="20dp"
+                        android:letterSpacing="0.05"
                         android:fontFamily="@font/font"/>
                 </LinearLayout>
 
@@ -75,6 +76,7 @@
                         android:textSize="24dp"
                         android:fontFamily="@font/font"
                         android:drawablePadding="8dp"
+                        android:letterSpacing="0.05"
                         android:drawableLeft="@drawable/ic_money" />
 
                     <TableLayout
@@ -90,6 +92,7 @@
                                 android:text="기본요금"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                             <TextView
@@ -97,6 +100,7 @@
                                 android:text="60분 3,000원"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
                         </TableRow>
                     </TableLayout>
@@ -116,6 +120,7 @@
                         android:textSize="24dp"
                         android:fontFamily="@font/font"
                         android:drawablePadding="8dp"
+                        android:letterSpacing="0.05"
                         android:drawableLeft="@drawable/ic_time"  />
 
                     <TableLayout
@@ -131,14 +136,16 @@
                                 android:text="평일 오픈"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                             <TextView
                                 android:id="@+id/opentime_weekday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                         </TableRow>
@@ -148,14 +155,16 @@
                                 android:text="평일 마감"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                             <TextView
                                 android:id="@+id/closetime_weekday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                         </TableRow>
@@ -165,14 +174,16 @@
                                 android:text="토요일 오픈"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                             <TextView
                                 android:id="@+id/opentime_saturday"
                                 android:gravity="right"
-                                android:text=""
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                         </TableRow>
@@ -182,14 +193,16 @@
                                 android:text="토요일 마감"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                             <TextView
                                 android:id="@+id/closetime_saturday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                         </TableRow>
@@ -199,14 +212,16 @@
                                 android:text="공휴일 오픈"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                             <TextView
                                 android:id="@+id/opentime_holiday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
+                                android:letterSpacing="0.05"
                                 android:fontFamily="@font/font"/>
 
                         </TableRow>
@@ -221,7 +236,7 @@
                             <TextView
                                 android:id="@+id/closetime_holiday"
                                 android:gravity="right"
-                                android:text="00:00"
+                                android:text="XX:XX"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
                                 android:fontFamily="@font/font"/>
