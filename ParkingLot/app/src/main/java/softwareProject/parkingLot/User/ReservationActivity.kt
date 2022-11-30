@@ -22,7 +22,7 @@ import java.util.Calendar.*
 class ReservationActivity : AppCompatActivity() {
     // DB 객체 설정
     private val database = FirebaseDatabase.getInstance()
-    private val parkingDB = database.getReference()
+    private val parkingDB = database.reference
     private val auth = FirebaseAuth.getInstance()
     private val currentUser = auth.currentUser?.uid.toString()
 
@@ -93,12 +93,12 @@ class ReservationActivity : AppCompatActivity() {
         val current_month = (reservation_Calendar.get(Calendar.MONTH) + 1).toString()
         val current_date = reservation_Calendar.get(Calendar.DATE)
         val current_dayOfWeek = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
-        selectDate.setText("${current_month}월 ${current_date}일 (${current_dayOfWeek})")
+        selectDate.text = "${current_month}월 ${current_date}일 (${current_dayOfWeek})"
 
         // 예약시간 TextView 설정
         val current_hour = reservation_Calendar.get(Calendar.HOUR)
         val current_minute = reservation_Calendar.get(Calendar.MINUTE)
-        selectTime.setText("${current_hour}시 ${current_minute}분")
+        selectTime.text = "${current_hour}시 ${current_minute}분"
     }
 
     @SuppressLint("ResourceAsColor")
@@ -138,14 +138,14 @@ class ReservationActivity : AppCompatActivity() {
             }
             val day = reservation_Calendar.getDisplayName(DAY_OF_WEEK, SHORT, Locale.KOREA)
 
-            selectDate.setText("${month + 1}월 ${dayOfMonth}일 (${day})")
+            selectDate.text = "${month + 1}월 ${dayOfMonth}일 (${day})"
         }
         timePicker.setOnTimeChangedListener { view, hour, min ->
             reservation_Calendar.apply {
                 set(Calendar.HOUR, hour)
                 set(Calendar.MINUTE, hour)
             }
-            selectTime.setText("${hour}시 ${min}분")
+            selectTime.text = "${hour}시 ${min}분"
         }
         // 예약하기 버튼 클릭 리스너
         btnReservation.setOnClickListener {
@@ -160,10 +160,10 @@ class ReservationActivity : AppCompatActivity() {
                 parkingDB.get().addOnSuccessListener {
                     // User DB에서 현재 사용자의 이름 가져옴
                     val currentUser_name =
-                        it.child("user").child(currentUser).child("name").getValue().toString()
+                        it.child("user").child(currentUser).child("name").value.toString()
                     // Parking DB에서 현재 주차자리 수 가져오기
                     var counting =
-                        it.child("Parking").child(parking.id.toString()).child("counting").getValue().toString().toInt()
+                        it.child("Parking").child(parking.id.toString()).child("counting").value.toString().toInt()
 
                     // Host DB에 예약한 유저 닉네임 등록
                     parkingDB.child("host").child(parking.id.toString()).child("reservation_user").setValue(currentUser_name)
@@ -183,7 +183,7 @@ class ReservationActivity : AppCompatActivity() {
                     // 첫 화면으로 돌아감
                     Toast.makeText(this,"예약되었습니다",Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MapActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
             }
