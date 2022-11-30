@@ -25,6 +25,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import softwareProject.parkingLot.R
 import java.util.*
+import kotlin.concurrent.thread
 
 class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, View.OnClickListener {
     private lateinit var parking: Parking
@@ -38,6 +39,9 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
     // lazy : lateinit과 동일. 다만, val에 사용
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource // 위치 반환 객체
+
+    // Thread Control Flag
+    private var threadFlag = true
 
     private val mapView: MapView by lazy {
         findViewById<MapView>(R.id.mapView)
@@ -247,6 +251,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
     private fun initFun() {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser?.uid.toString()
+
         user_name = findViewById<TextView>(R.id.user_name)
         parking_lot_name = findViewById<TextView>(R.id.parking_lot_name)
         startTime = findViewById<TextView>(R.id.startTime)
@@ -257,54 +262,67 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
         reservationInfoLayout = findViewById<LinearLayout>(R.id.reservationInfoLayout)
         btn_CancelReservation_.setOnClickListener(this)
 
-        var calCurrent = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
 
-        // realtime db -> 없으면 알아서 생성
-        val parkingDB = FirebaseDatabase.getInstance().getReference().child("user")
-        parkingDB.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                user_name.text = snapshot.child(currentUser).child("name").value.toString()
-                // 주차장 예약 내역을 parking_id롤 통해 확인
-                if (snapshot.child(currentUser).child("parking_id").value != null) {
-                    // 예약 내역이 있을 경우 예약 정보, 사용시간, 예약취소버튼을 표시
+        // 사용시간 실시간 변경
+        Log.d("스레드", "스레드 시작")
+        thread(start = true) {
+            while (threadFlag) {
+                runOnUiThread {
+                    Log.d("스레드", "스레드 작동중")
+                    // realtime db -> 없으면 알아서 생성
+                    val parkingDB = FirebaseDatabase.getInstance().getReference().child("user")
+                    parkingDB.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            user_name.text = snapshot.child(currentUser).child("name").value.toString()
+                            // 주차장 예약 내역을 parking_id롤 통해 확인
+                            if (snapshot.child(currentUser).child("parking_id").value != null) {
+                                // 예약 내역이 있을 경우 예약 정보, 사용시간, 예약취소버튼을 표시
+                                var calCurrent = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
 
-                    parking_lot_name.text = snapshot.child(currentUser).child("parking_name").value.toString()
-                    startTime.text = snapshot.child(currentUser).child("reservation_time").value.toString()
-                    calCurrent.timeInMillis = calCurrent.timeInMillis - snapshot.child(currentUser).child("reservation_time_mills").value.toString().toLong()
+                                parking_lot_name.text = snapshot.child(currentUser).child("parking_name").value.toString()
+                                startTime.text = snapshot.child(currentUser).child("reservation_time").value.toString()
+                                calCurrent.timeInMillis = calCurrent.timeInMillis - snapshot.child(currentUser).child("reservation_time_mills").value.toString().toLong()
 
-                    remainingTime.text = "${calCurrent.timeInMillis / (1000 * 60 * 60)} : " + "${calCurrent.timeInMillis / (1000 * 60) % 60}"
+                                remainingTime.text = "${calCurrent.timeInMillis / (1000 * 60 * 60)} : " + "${calCurrent.timeInMillis / (1000 * 60) % 60}"
 
-                    if (calCurrent.timeInMillis < 0) {
-                        // 아직 사용하지 않은 경우 사용시간 비표시 및 예약취소 표시
-                        usedTimeLayout.visibility = View.GONE
-                        calcelReservationLayout.visibility = View.VISIBLE
-                    }else{
-                        // 이미 사용한 경우 사용시간 표시
-                        usedTimeLayout.visibility = View.VISIBLE
-                        calcelReservationLayout.visibility = View.GONE
-                    }
-                } else {
-                    // 예약내역이 없는 경우 예약정보 비표시
-                    reservationInfoLayout.visibility = View.GONE
+                                if (calCurrent.timeInMillis < 0) {
+                                    // 아직 사용하지 않은 경우 사용시간 비표시 및 예약취소 표시
+                                    usedTimeLayout.visibility = View.GONE
+                                    calcelReservationLayout.visibility = View.VISIBLE
+                                } else {
+                                    // 이미 사용한 경우 사용시간 표시
+                                    usedTimeLayout.visibility = View.VISIBLE
+                                    calcelReservationLayout.visibility = View.GONE
+                                }
+                            } else {
+                                // 예약내역이 없는 경우 예약정보 비표시
+                                reservationInfoLayout.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {}
+                    })
                 }
+                Thread.sleep(1000)
             }
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
+        }
     }
 
     override fun onStart() {
         super.onStart()
+        threadFlag = true
         mapView.onStart()
     }
 
     override fun onResume() {
         super.onResume()
+        threadFlag = true
         mapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
+        threadFlag = false
         mapView.onPause()
     }
 
@@ -315,11 +333,13 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
 
     override fun onStop() {
         super.onStop()
+        threadFlag = false
         mapView.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        threadFlag=false
         mapView.onDestroy()
     }
 
