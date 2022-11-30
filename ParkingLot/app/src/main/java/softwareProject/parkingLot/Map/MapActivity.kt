@@ -1,13 +1,12 @@
 package softwareProject.parkingLot.Map
 
 import android.app.TabActivity
-import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
@@ -25,16 +24,20 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import softwareProject.parkingLot.R
-import softwareProject.parkingLot.User.ReservationActivity
-import java.text.SimpleDateFormat
 import java.util.*
 
-class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
-    private lateinit var parking : Parking
+class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, View.OnClickListener {
+    private lateinit var parking: Parking
+
+    // DB 객체 설정
+    private val database = FirebaseDatabase.getInstance()
+    private val parkingDB = database.getReference()
+    private val auth = FirebaseAuth.getInstance()
+    private val currentUser = auth.currentUser?.uid.toString()
 
     // lazy : lateinit과 동일. 다만, val에 사용
-    private lateinit var naverMap : NaverMap
-    private lateinit var locationSource : FusedLocationSource // 위치 반환 객체
+    private lateinit var naverMap: NaverMap
+    private lateinit var locationSource: FusedLocationSource // 위치 반환 객체
 
     private val mapView: MapView by lazy {
         findViewById<MapView>(R.id.mapView)
@@ -42,13 +45,18 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
     private val viewPager: ViewPager2 by lazy {
         findViewById(R.id.mapViewPager2)
     }
-    private lateinit var parkingDto : ParkingDto
+    private lateinit var parkingDto: ParkingDto
     private val viewPagerAdapter = ParkingViewPagerAdapter()
 
-    private lateinit var user_name : TextView
-    private lateinit var parking_lot_name : TextView
-    private lateinit var startTime : TextView
-    private lateinit var remainingTime : TextView
+    private lateinit var user_name: TextView
+    private lateinit var parking_lot_name: TextView
+    private lateinit var startTime: TextView
+    private lateinit var usedTimeLayout: LinearLayout
+    private lateinit var remainingTime: TextView
+    private lateinit var calcelReservationLayout: LinearLayout
+    private lateinit var btn_CancelReservation_: Button
+    private lateinit var reservationInfoLayout: LinearLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +71,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         viewPager.adapter = viewPagerAdapter
 
         // viewPager에 보이는 페이지가 변화될때 내용
-        viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 // 페이지 바뀌면 데이터 이용해 맵 위치도 이동
@@ -85,6 +93,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         tabHost.addTab(tabSpecMy)
 
         tabHost.currentTab = 0
+
     }
 
     // 오버레이는 마커 총집합을 의미. 즉, 마커 클릭 때 동작 설정
@@ -102,6 +111,28 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         return true
     }
 
+    // 예약취소 버튼 클릭 이벤트
+    override fun onClick(view: View?) {
+        if (view != null) {
+            if (view.id == R.id.btn_CancelReservation) {
+                parkingDB.get().addOnSuccessListener {
+                    var parking_id = it.child("user").child(currentUser).child("parking_id").value.toString()
+                    // host의 예약유저와 user의 주차장 예약정보들을 제거
+                    parkingDB.child("host").child(parking_id.toString()).child("reservation_user").setValue(null)
+                    parkingDB.child("user").child(currentUser).child("parking_id").setValue(null)
+                    parkingDB.child("user").child(currentUser).child("parking_name").setValue(null)
+                    parkingDB.child("user").child(currentUser).child("reservation_time").setValue(null)
+                    parkingDB.child("user").child(currentUser).child("reservation_time_mills").setValue(null)
+
+                    // 주차장 정보 및 예약취소 레이아웃 안보이게 설정
+                    reservationInfoLayout.visibility = View.GONE
+                    calcelReservationLayout.visibility = View.GONE
+                    Toast.makeText(this, "예약을 취소하였습니다", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun parkingMarking() {
         // 마커 찍기
         parkingDto.parkings.forEach { parking ->
@@ -116,7 +147,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
     }
 
 
-    private fun mapAPI(accessKeyNum : Int) {
+    private fun mapAPI(accessKeyNum: Int) {
         // api test
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.odcloud.kr/")
@@ -124,15 +155,17 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
             .build()
 
         val parkingService = retrofit.create(ParkingService::class.java)
-        var apiKey : String
+        var apiKey: String
         if (accessKeyNum == 0) apiKey = "noPG7qG7dO3ftTu/rjrDZxXLyQ3EwSpIUGmkLTfbCleCIgtBkt2GQFv+bcGhS/+65IKs4pdQ0VqWlRrDiDVmpw=="
         else apiKey = "noPG7qG7dO3ftTu%2FrjrDZxXLyQ3EwSpIUGmkLTfbCleCIgtBkt2GQFv%2BbcGhS%2F%2B65IKs4pdQ0VqWlRrDiDVmpw%3D%3D"
-        parkingService.getParkingLocation(apiKey,
-            1,10,"26380") // 사하구청 : 26380, 테스트로 데이터 10개만
-            .enqueue(object: Callback<ParkingDto> {
+        parkingService.getParkingLocation(
+            apiKey,
+            1, 10, "26380"
+        ) // 사하구청 : 26380, 테스트로 데이터 10개만
+            .enqueue(object : Callback<ParkingDto> {
                 override fun onResponse(call: Call<ParkingDto>, response: Response<ParkingDto>) {
                     // success
-                    if(!response.isSuccessful){
+                    if (!response.isSuccessful) {
                         Log.d("MapActivity", "accessKeyNum : ${accessKeyNum.toString()}") // test 확인용
                         if (accessKeyNum == 0) mapAPI(1) // 재귀
                         else {
@@ -141,9 +174,9 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
                         }
                         return
                     }
-                    response.body()?.let{
-                        Log.d("MapActivity",it.toString())
-                        Log.d("MapActivity",it.parkings.toString())
+                    response.body()?.let {
+                        Log.d("MapActivity", it.toString())
+                        Log.d("MapActivity", it.parkings.toString())
                         parkingDto = it
                         // 2. 마커를 이용해서 주차장 위치 설정
                         parkingMarking()
@@ -171,7 +204,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         naverMap = map
 
         // default : 동아대 위치
-        val cameraUpdate = CameraUpdate.scrollTo(LatLng(35.116712,128.968449))
+        val cameraUpdate = CameraUpdate.scrollTo(LatLng(35.116712, 128.968449))
         naverMap.moveCamera(cameraUpdate)
         // 현위치 버튼(권한 필요)
         val uiSetting = naverMap.uiSettings
@@ -191,9 +224,9 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
 
     // 권한할 때 사용하는 함수 오버라이딩(boolean 타입)
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // 정상이면 FusedLocationSource 에서 인자로보낸 상태코드 1000이 requestCode로 가짐
@@ -203,7 +236,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         }
         // 권한 함수 정상 작동 판단
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
-            if(!locationSource.isActivated) {
+            if (!locationSource.isActivated) {
                 // 권한 함수는 실행되었지만, 권한 얻기 실패 -> 네이버 맵에 실패 상태 전송
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             }
@@ -217,7 +250,12 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         user_name = findViewById<TextView>(R.id.user_name)
         parking_lot_name = findViewById<TextView>(R.id.parking_lot_name)
         startTime = findViewById<TextView>(R.id.startTime)
+        usedTimeLayout = findViewById<LinearLayout>(R.id.usedTimeLayout)
         remainingTime = findViewById<TextView>(R.id.remainingTime)
+        calcelReservationLayout = findViewById<LinearLayout>(R.id.cancelReservationLayout)
+        btn_CancelReservation_ = findViewById<Button>(R.id.btn_CancelReservation)
+        reservationInfoLayout = findViewById<LinearLayout>(R.id.reservationInfoLayout)
+        btn_CancelReservation_.setOnClickListener(this)
 
         var calCurrent = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
 
@@ -225,15 +263,32 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener {
         val parkingDB = FirebaseDatabase.getInstance().getReference().child("user")
         parkingDB.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                Log.d("test", snapshot.child(currentUser).child("name").value.toString())
                 user_name.text = snapshot.child(currentUser).child("name").value.toString()
-                parking_lot_name.text = snapshot.child(currentUser).child("parking_name").value.toString()
-                startTime.text = snapshot.child(currentUser).child("reservation_time").value.toString()
-                calCurrent.timeInMillis = calCurrent.timeInMillis - snapshot.child(currentUser).child("reservation_time_mills").value.toString().toLong()
+                // 주차장 예약 내역을 parking_id롤 통해 확인
+                if (snapshot.child(currentUser).child("parking_id").value != null) {
+                    // 예약 내역이 있을 경우 예약 정보, 사용시간, 예약취소버튼을 표시
 
-                remainingTime.text = "${calCurrent.timeInMillis/(1000*60*60)} : " + "${calCurrent.timeInMillis/(1000*60)%60}"
+                    parking_lot_name.text = snapshot.child(currentUser).child("parking_name").value.toString()
+                    startTime.text = snapshot.child(currentUser).child("reservation_time").value.toString()
+                    calCurrent.timeInMillis = calCurrent.timeInMillis - snapshot.child(currentUser).child("reservation_time_mills").value.toString().toLong()
 
+                    remainingTime.text = "${calCurrent.timeInMillis / (1000 * 60 * 60)} : " + "${calCurrent.timeInMillis / (1000 * 60) % 60}"
+
+                    if (calCurrent.timeInMillis < 0) {
+                        // 아직 사용하지 않은 경우 사용시간 비표시 및 예약취소 표시
+                        usedTimeLayout.visibility = View.GONE
+                        calcelReservationLayout.visibility = View.VISIBLE
+                    }else{
+                        // 이미 사용한 경우 사용시간 표시
+                        usedTimeLayout.visibility = View.VISIBLE
+                        calcelReservationLayout.visibility = View.GONE
+                    }
+                } else {
+                    // 예약내역이 없는 경우 예약정보 비표시
+                    reservationInfoLayout.visibility = View.GONE
+                }
             }
+
             override fun onCancelled(error: DatabaseError) {}
         })
     }
