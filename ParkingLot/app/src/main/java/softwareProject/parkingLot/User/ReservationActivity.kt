@@ -1,14 +1,15 @@
 package softwareProject.parkingLot.User
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
-import android.os.Debug
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import softwareProject.parkingLot.Map.MapActivity
@@ -16,6 +17,7 @@ import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
 import java.util.*
 import java.util.Calendar.*
+
 
 class ReservationActivity : AppCompatActivity() {
     // DB 객체 설정
@@ -44,7 +46,6 @@ class ReservationActivity : AppCompatActivity() {
 
     // 테스트 코드
     val TEST = true
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,14 +101,17 @@ class ReservationActivity : AppCompatActivity() {
         selectTime.setText("${current_hour}시 ${current_minute}분")
     }
 
+    @SuppressLint("ResourceAsColor")
     fun setListener() {
         selectDate.setOnClickListener(View.OnClickListener {
             if (cal_already_ON) {
                 selectDate.setBackgroundResource(R.drawable.button_click_off)
+                selectDate.setTextColor(ContextCompat.getColor(applicationContext!!, android.R.color.tab_indicator_text))
                 calView.visibility = View.GONE
                 cal_already_ON = false
             } else {
                 selectDate.setBackgroundResource(R.drawable.button_click_on)
+                selectDate.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.white))
                 calView.visibility = View.VISIBLE
                 cal_already_ON = true
             }
@@ -115,10 +119,12 @@ class ReservationActivity : AppCompatActivity() {
         selectTime.setOnClickListener(View.OnClickListener {
             if (tPicker_already_ON) {
                 selectTime.setBackgroundResource(R.drawable.button_click_off)
+                selectTime.setTextColor(ContextCompat.getColor(applicationContext!!, android.R.color.tab_indicator_text))
                 timePicker.visibility = View.GONE
                 tPicker_already_ON = false
             } else {
                 selectTime.setBackgroundResource(R.drawable.button_click_on)
+                selectTime.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.white))
                 timePicker.visibility = View.VISIBLE
                 tPicker_already_ON = true
             }

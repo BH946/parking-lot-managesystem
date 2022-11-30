@@ -39,7 +39,7 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
 
     lateinit var btn_showReservationActivity: Button
 
-    private lateinit var naverMap : NaverMap
+    private lateinit var naverMap: NaverMap
     private val mapView: MapView by lazy {
         findViewById<MapView>(R.id.mapView)
     }
@@ -98,9 +98,19 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
         parkingDB.get().addOnSuccessListener {
-            var counting = it.child("Parking").child(parking.id.toString()).child("counting").getValue().toString().toInt()
-            var size = it.child("Parking").child(parking.id.toString()).child("size").getValue().toString().toInt()
-            Log.d("counting", counting.toString())
+            var parkingIsNull = it.child("Parking").child(parking.id.toString()).child("counting").value
+            var counting: Int
+            var size: Int
+            if (parkingIsNull == null) {
+                counting = 0
+                size = Integer.parseInt(parking.num)
+                btn_showReservationActivity.text="예약을 받지 않는 주차장입니다"
+                btn_showReservationActivity.isEnabled = false
+
+            } else {
+                counting = it.child("Parking").child(parking.id.toString()).child("counting").getValue().toString().toInt()
+                size = it.child("Parking").child(parking.id.toString()).child("size").getValue().toString().toInt()
+            }
             if (counting >= size) {
                 btn_showReservationActivity.isEnabled = false
                 Toast.makeText(this, "예약 가능한 자리가 없습니다", Toast.LENGTH_LONG).show()
@@ -133,11 +143,11 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap = map
 
         // default : 동아대 위치
-        val cameraUpdate = CameraUpdate.scrollTo(LatLng(parking.lat.toDouble(),parking.lon.toDouble()))
+        val cameraUpdate = CameraUpdate.scrollTo(LatLng(parking.lat.toDouble(), parking.lon.toDouble()))
         naverMap.moveCamera(cameraUpdate)
 
         val marker = Marker()
-        marker.position = LatLng(parking.lat.toDouble(),parking.lon.toDouble())
+        marker.position = LatLng(parking.lat.toDouble(), parking.lon.toDouble())
         marker.map = naverMap
         marker.tag = parking.id
         marker.icon = MarkerIcons.BLACK
