@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#000000"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -13,6 +13,18 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="vertical">
+
+            <com.naver.maps.map.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -23,17 +35,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:orientation="vertical">
-
-                    <com.naver.maps.map.MapView
-                        android:id="@+id/mapView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,23 +44,23 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_location"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/font"
                         android:text="위 치"
                         android:textColor="#D391A7"
-                        android:textSize="24dp"
-                        android:fontFamily="@font/font"
-                        android:drawablePadding="8dp"
-                        android:drawableLeft="@drawable/ic_location" />
+                        android:textSize="24dp" />
 
                     <TextView
                         android:id="@+id/parking_road"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/font"
+                        android:letterSpacing="0.05"
                         android:paddingLeft="30dp"
                         android:text="부산광역시 사하구 낙동대로"
                         android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:letterSpacing="0.05"
-                        android:fontFamily="@font/font"/>
+                        android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -71,13 +72,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_money"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/font"
+                        android:letterSpacing="0.05"
                         android:text="시간요금"
                         android:textColor="#D391A7"
-                        android:textSize="24dp"
-                        android:fontFamily="@font/font"
-                        android:drawablePadding="8dp"
-                        android:letterSpacing="0.05"
-                        android:drawableLeft="@drawable/ic_money" />
+                        android:textSize="24dp" />
 
                     <TableLayout
                         android:layout_width="match_parent"
@@ -89,19 +90,19 @@
                         <TableRow>
 
                             <TextView
+                                android:fontFamily="@font/font"
+                                android:letterSpacing="0.05"
                                 android:text="기본요금"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                             <TextView
+                                android:fontFamily="@font/font"
                                 android:gravity="right"
+                                android:letterSpacing="0.05"
                                 android:text="60분 3,000원"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
                         </TableRow>
                     </TableLayout>
                 </LinearLayout>
@@ -115,13 +116,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_time"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/font"
+                        android:letterSpacing="0.05"
                         android:text="운영시간"
                         android:textColor="#D391A7"
-                        android:textSize="24dp"
-                        android:fontFamily="@font/font"
-                        android:drawablePadding="8dp"
-                        android:letterSpacing="0.05"
-                        android:drawableLeft="@drawable/ic_time"  />
+                        android:textSize="24dp" />
 
                     <TableLayout
                         android:layout_width="match_parent"
@@ -133,115 +134,120 @@
                         <TableRow>
 
                             <TextView
+                                android:fontFamily="@font/font"
+                                android:letterSpacing="0.05"
                                 android:text="평일 오픈"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                             <TextView
                                 android:id="@+id/opentime_weekday"
+                                android:fontFamily="@font/font"
                                 android:gravity="right"
+                                android:letterSpacing="0.05"
                                 android:text="XX:XX"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                         </TableRow>
+
                         <TableRow>
 
                             <TextView
+                                android:fontFamily="@font/font"
+                                android:letterSpacing="0.05"
                                 android:text="평일 마감"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                             <TextView
                                 android:id="@+id/closetime_weekday"
+                                android:fontFamily="@font/font"
                                 android:gravity="right"
+                                android:letterSpacing="0.05"
                                 android:text="XX:XX"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                         </TableRow>
+
                         <TableRow>
 
                             <TextView
+                                android:fontFamily="@font/font"
+                                android:letterSpacing="0.05"
                                 android:text="토요일 오픈"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                             <TextView
                                 android:id="@+id/opentime_saturday"
+                                android:fontFamily="@font/font"
                                 android:gravity="right"
+                                android:letterSpacing="0.05"
                                 android:text="XX:XX"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                         </TableRow>
+
                         <TableRow>
 
                             <TextView
+                                android:fontFamily="@font/font"
+                                android:letterSpacing="0.05"
                                 android:text="토요일 마감"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                             <TextView
                                 android:id="@+id/closetime_saturday"
+                                android:fontFamily="@font/font"
                                 android:gravity="right"
+                                android:letterSpacing="0.05"
                                 android:text="XX:XX"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                         </TableRow>
+
                         <TableRow>
 
                             <TextView
+                                android:fontFamily="@font/font"
+                                android:letterSpacing="0.05"
                                 android:text="공휴일 오픈"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                             <TextView
                                 android:id="@+id/opentime_holiday"
+                                android:fontFamily="@font/font"
                                 android:gravity="right"
+                                android:letterSpacing="0.05"
                                 android:text="XX:XX"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                         </TableRow>
+
                         <TableRow>
 
                             <TextView
+                                android:fontFamily="@font/font"
+                                android:letterSpacing="0.05"
                                 android:text="공휴일 마감"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                             <TextView
                                 android:id="@+id/closetime_holiday"
+                                android:fontFamily="@font/font"
                                 android:gravity="right"
+                                android:letterSpacing="0.05"
                                 android:text="XX:XX"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:letterSpacing="0.05"
-                                android:fontFamily="@font/font"/>
+                                android:textSize="20dp" />
 
                         </TableRow>
                     </TableLayout>
@@ -256,22 +262,22 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_call"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/font"
                         android:text="전 화"
                         android:textColor="#D391A7"
-                        android:textSize="24dp"
-                        android:fontFamily="@font/font"
-                        android:drawablePadding="8dp"
-                        android:drawableLeft="@drawable/ic_call"  />
+                        android:textSize="24dp" />
 
                     <TextView
                         android:id="@+id/parking_tel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/font"
                         android:paddingLeft="30dp"
                         android:text="010-1234-5678"
                         android:textColor="#D391A7"
-                        android:textSize="20dp"
-                        android:fontFamily="@font/font" />
+                        android:textSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -289,11 +295,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/btn_login"
+            android:fontFamily="@font/font"
             android:text="예 약 하 기"
             android:textColor="#ffffff"
-            android:textSize="20dp"
-            android:fontFamily="@font/font"
-            android:background="@drawable/btn_login" />
+            android:textSize="20dp" />
     </LinearLayout>
 
 
