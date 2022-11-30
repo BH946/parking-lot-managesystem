@@ -121,7 +121,10 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
             if (view.id == R.id.btn_CancelReservation) {
                 parkingDB.get().addOnSuccessListener {
                     var parking_id = it.child("user").child(currentUser).child("parking_id").value.toString()
+                    var counting = it.child("Parking").child(parking_id.toString()).child("counting").value.toString().toInt()
+
                     // host의 예약유저와 user의 주차장 예약정보들을 제거
+                    parkingDB.child("Parking").child(parking_id.toString()).child("counting").setValue(counting-1)
                     parkingDB.child("host").child(parking_id.toString()).child("reservation_user").setValue(null)
                     parkingDB.child("user").child(currentUser).child("parking_id").setValue(null)
                     parkingDB.child("user").child(currentUser).child("parking_name").setValue(null)
@@ -339,7 +342,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
 
     override fun onDestroy() {
         super.onDestroy()
-        threadFlag=false
+        threadFlag = false
         mapView.onDestroy()
     }
 
