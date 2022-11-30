@@ -19,7 +19,6 @@ class HostLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hostlogin)
-        title = "붕붕아 관리자 모드"
         initLoginButton()
 
         dbRef = FirebaseDatabase.getInstance().reference

@@ -1,8 +1,10 @@
 package softwareProject.parkingLot.Host
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
@@ -24,7 +26,7 @@ class HostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host)
-        title = "붕붕아-관리자 모드"
+
         val text = findViewById<TextView>(R.id.space)
         var y = 0
         var m = 0
@@ -70,54 +72,59 @@ class HostActivity : AppCompatActivity() {
         }
 
         parkingDB.child("Parking").child(number.toString())
-                .addValueEventListener(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.child("counting").value != null) {
-                            numberRest.text =
-                                    snapshot.child("counting").value.toString()
-                            numberAll.text=
-                                    snapshot.child("size").value.toString()
-                            resUserNum=
-                                    snapshot.child("counting").value.toString().toInt()
-                            allUserNum=
-                                    snapshot.child("size").value.toString().toInt()
-                        }
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.child("counting").value != null) {
+                        numberRest.text =
+                            snapshot.child("counting").value.toString()
+                        numberAll.text=
+                            snapshot.child("size").value.toString()
+                        resUserNum=
+                            snapshot.child("counting").value.toString().toInt()
+                        allUserNum=
+                            snapshot.child("size").value.toString().toInt()
+                    }
 
-                    }
-                    override fun onCancelled(error: DatabaseError) {
-                    }
-                })
-       /* parkingDB.get().addOnSuccessListener {
-            numberRest.text =
-                it.child("Parking").child(number.toString()).child("counting").getValue()
-                    .toString()
-            numberAll.text=
-                it.child("Parking").child(number.toString()).child("size").getValue()
-                    .toString()
-            resUserNum=
-                    it.child("Parking").child(number.toString()).child("counting").getValue().toString().toInt()
-            allUserNum=
-                    it.child("Parking").child(number.toString()).child("size").getValue().toString().toInt()
-        }*/
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+        /* parkingDB.get().addOnSuccessListener {
+             numberRest.text =
+                 it.child("Parking").child(number.toString()).child("counting").getValue()
+                     .toString()
+             numberAll.text=
+                 it.child("Parking").child(number.toString()).child("size").getValue()
+                     .toString()
+             resUserNum=
+                     it.child("Parking").child(number.toString()).child("counting").getValue().toString().toInt()
+             allUserNum=
+                     it.child("Parking").child(number.toString()).child("size").getValue().toString().toInt()
+         }*/
 
 
 
         check.setOnClickListener {
+            out.setBackgroundResource(R.drawable.btn_host)
             resUserNum++
             numberRest.text = resUserNum.toString()
             out.isClickable=true
             if (resUserNum == allUserNum) {
                 check.isClickable = false
+                check.setBackgroundResource(R.drawable.btn_host2)
             }
             parkingDB.child("Parking").child(number.toString()).child("counting").setValue(resUserNum.toString())
         }
 
         out.setOnClickListener {
+            check.setBackgroundResource(R.drawable.btn_host)
             resUserNum--
             numberRest.text = resUserNum.toString()
             check.isClickable=true
+
             if (resUserNum == 0) {
                 out.isClickable = false
+                out.setBackgroundResource(R.drawable.btn_host2)
             }
             parkingDB.child("Parking").child(number.toString()).child("counting").setValue(resUserNum.toString())
         }

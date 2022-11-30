@@ -5,28 +5,23 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.viewpager2.widget.ViewPager2
 import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.FirebaseDatabase
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
-import softwareProject.parkingLot.Map.MapActivity
 
 
 class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
-    val database = FirebaseDatabase.getInstance()
-    val parkingDB = database.getReference()
-    lateinit var parking: Parking
+    private val database = FirebaseDatabase.getInstance()
+    private val parkingDB = database.reference
+    private lateinit var parking: Parking
 
-    lateinit var parking_name: TextView
     lateinit var parking_road: TextView
     lateinit var parking_tel: TextView
 
@@ -52,12 +47,11 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         initView()
         setViewText()
         setListener()
-//        printParkingData()
 
         mapView.getMapAsync(this)
     }
 
-    fun initView() {
+    private fun initView() {
         parking = intent.getSerializableExtra("parking") as Parking
 
         parking_road = findViewById(R.id.parking_road)
@@ -73,17 +67,17 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         btn_showReservationActivity = findViewById(R.id.showReservation)
     }
 
-    fun setViewText() {
+    private fun setViewText() {
         title = parking.name
-        parking_road.setText(parking.road)
-        parking_tel.setText(parking.tel)
+        parking_road.text = parking.road
+        parking_tel.text = parking.tel
 
-        openTime_weekday.setText(parking.weekdayStartTime)
-        closeTime_weekday.setText(parking.weekdayEndTime)
-        openTime_saturday.setText(parking.saturdayStartTime)
-        closeTime_saturday.setText(parking.saturdayEndTime)
-        openTime_holiday.setText(parking.holidayStartTime)
-        closeTime_holiday.setText(parking.holidayEndTime)
+        openTime_weekday.text = parking.weekdayStartTime
+        closeTime_weekday.text = parking.weekdayEndTime
+        openTime_saturday.text = parking.saturdayStartTime
+        closeTime_saturday.text = parking.saturdayEndTime
+        openTime_holiday.text = parking.holidayStartTime
+        closeTime_holiday.text = parking.holidayEndTime
     }
 
     fun setListener() {
@@ -108,35 +102,14 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
                 btn_showReservationActivity.isEnabled = false
 
             } else {
-                counting = it.child("Parking").child(parking.id.toString()).child("counting").getValue().toString().toInt()
-                size = it.child("Parking").child(parking.id.toString()).child("size").getValue().toString().toInt()
+                counting = it.child("Parking").child(parking.id.toString()).child("counting").value.toString().toInt()
+                size = it.child("Parking").child(parking.id.toString()).child("size").value.toString().toInt()
             }
             if (counting >= size) {
                 btn_showReservationActivity.isEnabled = false
                 Toast.makeText(this, "예약 가능한 자리가 없습니다", Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-    fun printParkingData() {
-        Log.d("parking_data", parking.id.toString());
-        Log.d("parking_data", parking.name);
-        Log.d("parking_data", parking.lat);
-        Log.d("parking_data", parking.lon);
-        Log.d("parking_data", parking.category);
-        Log.d("parking_data", parking.way);
-        Log.d("parking_data", parking.area);
-        Log.d("parking_data", parking.road);
-        Log.d("parking_data", parking.num);
-        Log.d("parking_data", parking.day);
-        Log.d("parking_data", parking.weekdayStartTime);
-        Log.d("parking_data", parking.weekdayEndTime);
-        Log.d("parking_data", parking.saturdayStartTime);
-        Log.d("parking_data", parking.saturdayEndTime);
-        Log.d("parking_data", parking.holidayStartTime);
-        Log.d("parking_data", parking.holidayEndTime);
-        Log.d("parking_data", parking.cost);
-        Log.d("parking_data", parking.tel);
     }
 
     override fun onMapReady(map: NaverMap) {
