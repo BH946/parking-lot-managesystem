@@ -23,7 +23,6 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-        title = "붕붕아 회원가입"
 
         // Authentication, Database 초기화
         auth = FirebaseAuth.getInstance()

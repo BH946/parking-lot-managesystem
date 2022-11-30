@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        title = "붕붕아"
         val handler = Handler()
         handler.postDelayed({
             val intent = Intent(applicationContext, LoginActivity::class.java)
