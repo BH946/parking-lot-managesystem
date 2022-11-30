@@ -45,7 +45,7 @@ class ReservationActivity : AppCompatActivity() {
     lateinit var reservation_Calendar: Calendar
 
     // 테스트 코드
-    val TEST = true
+    val TEST = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,8 +167,10 @@ class ReservationActivity : AppCompatActivity() {
 
                     // Host DB에 예약한 유저 닉네임 등록
                     parkingDB.child("host").child(parking.id.toString()).child("reservation_user").setValue(currentUser_name)
-                    // User DB에 예약한 주차장 id 등록
+                    // User DB에 예약한 주차장 name 등록
                     parkingDB.child("user").child(currentUser).child("parking_name").setValue(parking.name.toString())
+                    // User DB에 예약한 주차장 id 등록
+                    parkingDB.child("user").child(currentUser).child("parking_id").setValue(parking.id.toString())
                     // User DB에 예약 시간 등록
                     parkingDB.child("user").child(currentUser).child("reservation_time")
                         .setValue(selectDate.text.toString() + " " + selectTime.text.toString())
@@ -179,6 +181,7 @@ class ReservationActivity : AppCompatActivity() {
                     parkingDB.child("Parking").child(parking.id.toString()).child("counting").setValue(counting + 1)
 
                     // 첫 화면으로 돌아감
+                    Toast.makeText(this,"예약되었습니다",Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MapActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
