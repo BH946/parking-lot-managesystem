@@ -100,21 +100,12 @@
                 android:paddingTop="20dp">
 
                 <TextView
-                    android:id="@+id/reservation"
+                    android:id="@+id/reservationUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="예약자"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
-                    android:fontFamily="@font/font"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 님 "
-                    android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
                     android:fontFamily="@font/font"/>
             </LinearLayout>
         </LinearLayout>
