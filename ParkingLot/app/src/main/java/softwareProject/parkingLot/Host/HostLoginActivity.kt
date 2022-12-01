@@ -11,10 +11,10 @@ import softwareProject.parkingLot.R
 import com.google.firebase.database.*
 
 class HostLoginActivity : AppCompatActivity() {
-    private lateinit var btn : Button
-    private lateinit var dbRef : DatabaseReference
-    private lateinit var name : String
-    private lateinit var reservation_user : String
+    private lateinit var btn: Button
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var name: String
+    private lateinit var reservation_user: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,37 +24,44 @@ class HostLoginActivity : AppCompatActivity() {
         dbRef = FirebaseDatabase.getInstance().reference
 
     }
+
     private fun initLoginButton() {
         btn = findViewById<Button>(R.id.btn_host)
         btn.setOnClickListener {
             val number = findViewById<EditText>(R.id.Number).text
-            val intent= Intent(applicationContext, HostActivity::class.java)
+            val intent = Intent(applicationContext, HostActivity::class.java)
 
-            intent.putExtra("number",number.toString())
+            intent.putExtra("number", number.toString())
             if (TextUtils.isEmpty(number)) {
-                Toast.makeText(this,"정보를 바르게 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "정보를 바르게 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener;
             }
 
             dbRef.child("host").child(number.toString())
-                    .addValueEventListener(object : ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if(snapshot.child("name").value != null) {
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.value == null) {
+                            Toast.makeText(this@HostLoginActivity, "정보를 바르게 입력해주세요", Toast.LENGTH_SHORT).show()
+
+                        } else {
+                            if (snapshot.child("name").value != null) {
                                 val data = snapshot.getValue(HostDB::class.java)
                                 name = data!!.name
                                 intent.putExtra("name", name)
 
                             }
-                            if(snapshot.child("reservation_user").value != null){
+                            if (snapshot.child("reservation_user").value != null) {
                                 val data = snapshot.getValue(HostDB::class.java)
                                 reservation_user = data!!.reservation_user
-                                intent.putExtra("reservation_user",reservation_user)
+                                intent.putExtra("reservation_user", reservation_user)
                             }
                             startActivity(intent)
                         }
-                        override fun onCancelled(error: DatabaseError) {
-                        }
-                    })
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
         }
     }
 }
