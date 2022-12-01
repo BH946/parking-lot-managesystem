@@ -98,15 +98,17 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
             if (parkingIsNull == null) {
                 counting = 0
                 size = Integer.parseInt(parking.num)
-                btn_showReservationActivity.text="예약을 받지 않는 주차장입니다"
-                btn_showReservationActivity.isEnabled = false
+                btn_showReservationActivity.text = "예약을 받지 않는 주차장입니다"
+                btn_showReservationActivity.isClickable = false
+                btn_showReservationActivity.setBackgroundResource(R.drawable.btn_host2)
 
             } else {
                 counting = it.child("Parking").child(parking.id.toString()).child("counting").value.toString().toInt()
                 size = it.child("Parking").child(parking.id.toString()).child("size").value.toString().toInt()
             }
             if (counting >= size) {
-                btn_showReservationActivity.isEnabled = false
+                btn_showReservationActivity.isClickable = false
+                btn_showReservationActivity.setBackgroundResource(R.drawable.btn_host2)
                 Toast.makeText(this, "예약 가능한 자리가 없습니다", Toast.LENGTH_LONG).show()
             }
         }
