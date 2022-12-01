@@ -26,7 +26,6 @@ class LoginActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        title = "붕붕아"
 
         auth = FirebaseAuth.getInstance() // 객체 생성
         initLoginButton()

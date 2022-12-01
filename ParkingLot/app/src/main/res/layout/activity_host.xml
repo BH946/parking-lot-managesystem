@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:text="관리자"
             android:textColor="#FFEB3B"
-            android:textSize="24dp"
+            android:textSize="22dp"
             android:fontFamily="@font/font"/>
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_gravity="center"
             android:text=" 관리자님!"
             android:textColor="#FFFFFF"
-            android:textSize="24dp"
+            android:textSize="22dp"
             android:textStyle="bold"
             android:fontFamily="@font/font"/>
     </LinearLayout>
@@ -100,29 +100,12 @@
                 android:paddingTop="20dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  "
-                    android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/reservation"
+                    android:id="@+id/reservationUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="예약자"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
-                    android:fontFamily="@font/font"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 님 "
-                    android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
                     android:fontFamily="@font/font"/>
             </LinearLayout>
         </LinearLayout>
@@ -153,32 +136,32 @@
             <LinearLayout
                 android:id="@+id/pAndText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="68dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/P"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="58dp"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/font"
                     android:text="P"
                     android:textColor="#FFEB3B"
                     android:textSize="50dp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/font"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/now"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/font"
                     android:text=" 주차장 현황"
                     android:textColor="#FFEB3B"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/font"/>
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
