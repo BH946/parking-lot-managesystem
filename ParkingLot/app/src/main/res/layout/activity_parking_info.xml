@@ -57,6 +57,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/font"
                         android:letterSpacing="0.05"
+                        android:lineSpacingExtra ="5dp"
                         android:paddingLeft="30dp"
                         android:text="부산광역시 사하구 낙동대로"
                         android:textColor="@color/white"

@@ -55,7 +55,7 @@ class HostActivity : AppCompatActivity() {
         d = cal[Calendar.DAY_OF_MONTH]
         h = cal[Calendar.HOUR_OF_DAY]
         mi = cal[Calendar.MINUTE]
-        text.text = y.toString() + "년" + m + "월" + d + "일" + h + "시" + mi + "분"
+        text.text = y.toString() + "년 " + m + "월 " + d + "일 " + h + "시 " + mi + "분"
         thread(start = true) {
             var i = 0
             while (true) {
@@ -66,7 +66,7 @@ class HostActivity : AppCompatActivity() {
                     d = cal[Calendar.DAY_OF_MONTH]
                     h = cal[Calendar.HOUR_OF_DAY]
                     mi = cal[Calendar.MINUTE]
-                    text.text = y.toString() + "년" + m + "월" + d + "일" + h + "시" + mi + "분"
+                    text.text = y.toString() + "년 " + m + "월 " + d + "일 " + h + "시 " + mi + "분"
                 }
                 Thread.sleep(1000)
             }
