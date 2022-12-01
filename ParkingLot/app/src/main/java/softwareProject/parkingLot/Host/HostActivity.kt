@@ -1,14 +1,11 @@
 package softwareProject.parkingLot.Host
 
-import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
-import softwareProject.parkingLot.Map.Parking
 import softwareProject.parkingLot.R
 import java.util.*
 import kotlin.concurrent.thread
@@ -16,10 +13,10 @@ import kotlin.concurrent.thread
 class HostActivity : AppCompatActivity() {
     val database = FirebaseDatabase.getInstance()
     val parkingDB = database.getReference()
-    private lateinit var name : String
-    private lateinit var reservation : String
-    var resUserNum : Int = 0
-    var allUserNum:Int =0
+    private lateinit var name: String
+    private lateinit var reservation_user: String
+    var resUserNum: Int = 0
+    var allUserNum: Int = 0
     lateinit var parking: String
 
 
@@ -40,13 +37,17 @@ class HostActivity : AppCompatActivity() {
 
         val host = findViewById<TextView>(R.id.host)
         name = intent.getStringExtra("name").toString()
-        host.text=name
+        host.text = name
 
-        val reservation = findViewById<TextView>(R.id.reservation)
-        this.reservation = intent.getStringExtra("reservation_user").toString()
-        reservation.text = this.reservation
-        //Log.d("txt확인",txt+","+txt1)
+        val reservationUserTextView = findViewById<TextView>(R.id.reservationUser)
+        val reservation_user = intent.getStringExtra("reservation_user").toString()
 
+        if (reservation_user == "null") {
+            reservationUserTextView.text = ""
+        } else {
+            reservationUserTextView.text = reservation_user+"님"
+        }
+        
         val number = intent.getStringExtra("number")
         var cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
         y = cal[Calendar.YEAR]
@@ -55,9 +56,9 @@ class HostActivity : AppCompatActivity() {
         h = cal[Calendar.HOUR_OF_DAY]
         mi = cal[Calendar.MINUTE]
         text.text = y.toString() + "년" + m + "월" + d + "일" + h + "시" + mi + "분"
-        thread(start = true){
+        thread(start = true) {
             var i = 0
-            while(true) {
+            while (true) {
                 var cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
                 runOnUiThread {
                     y = cal[Calendar.YEAR]
@@ -72,43 +73,30 @@ class HostActivity : AppCompatActivity() {
         }
 
         parkingDB.child("Parking").child(number.toString())
-            .addValueEventListener(object : ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.child("counting").value != null) {
+                    if (snapshot.child("counting").value != null) {
                         numberRest.text =
                             snapshot.child("counting").value.toString()
-                        numberAll.text=
+                        numberAll.text =
                             snapshot.child("size").value.toString()
-                        resUserNum=
+                        resUserNum =
                             snapshot.child("counting").value.toString().toInt()
-                        allUserNum=
+                        allUserNum =
                             snapshot.child("size").value.toString().toInt()
                     }
 
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
-        /* parkingDB.get().addOnSuccessListener {
-             numberRest.text =
-                 it.child("Parking").child(number.toString()).child("counting").getValue()
-                     .toString()
-             numberAll.text=
-                 it.child("Parking").child(number.toString()).child("size").getValue()
-                     .toString()
-             resUserNum=
-                     it.child("Parking").child(number.toString()).child("counting").getValue().toString().toInt()
-             allUserNum=
-                     it.child("Parking").child(number.toString()).child("size").getValue().toString().toInt()
-         }*/
-
-
 
         check.setOnClickListener {
             out.setBackgroundResource(R.drawable.btn_host)
             resUserNum++
             numberRest.text = resUserNum.toString()
-            out.isClickable=true
+            out.isClickable = true
             if (resUserNum == allUserNum) {
                 check.isClickable = false
                 check.setBackgroundResource(R.drawable.btn_host2)
@@ -120,7 +108,7 @@ class HostActivity : AppCompatActivity() {
             check.setBackgroundResource(R.drawable.btn_host)
             resUserNum--
             numberRest.text = resUserNum.toString()
-            check.isClickable=true
+            check.isClickable = true
 
             if (resUserNum == 0) {
                 out.isClickable = false
