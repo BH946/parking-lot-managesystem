@@ -22,7 +22,7 @@ class LoginActivity:AppCompatActivity() {
     private val btn1 : Button by lazy {
         findViewById<Button>(R.id.btn1)
     }
-
+    var mBackWait:Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -45,6 +45,18 @@ class LoginActivity:AppCompatActivity() {
         // test id : abc@naver.com
         // test pw : 123456
         testMapButton()
+    }
+    //뒤로가기버튼 클릭
+    override fun onBackPressed() {
+        // 뒤로가기 버튼 클릭
+        if(System.currentTimeMillis() - mBackWait >=2000 ) {
+            mBackWait = System.currentTimeMillis()
+            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르면 종료됩니다", Toast.LENGTH_SHORT).show()
+
+            //Snackbar.make(view,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.",Snackbar.LENGTH_LONG).show()
+        } else {
+            finish() //액티비티 종료
+        }
     }
     private fun initLoginButton() {
         btn = findViewById<Button>(R.id.btn_login)
