@@ -2,13 +2,15 @@ package softwareProject.parkingLot.Map
 
 import android.app.TabActivity
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.ContextCompat.getDrawable
+import androidx.core.content.res.ResourcesCompat.getDrawable
+import androidx.core.graphics.drawable.toDrawable
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
