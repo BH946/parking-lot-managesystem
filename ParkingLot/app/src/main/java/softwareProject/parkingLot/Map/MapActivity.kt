@@ -2,15 +2,10 @@ package softwareProject.parkingLot.Map
 
 import android.app.TabActivity
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContextCompat.getDrawable
-import androidx.core.content.res.ResourcesCompat.getDrawable
-import androidx.core.graphics.drawable.toDrawable
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -70,6 +65,7 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
         mapView.onCreate(savedInstanceState) // 액티비티 만들때 onCreate()는 반드시 호출
 
         initFun()
+        realtimeChangeInfo()
 
         // 네이버 맵 객체 가져오기(콜백 방식 사용)
         mapView.getMapAsync(this)
@@ -268,6 +264,10 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
         btn_CancelReservation_.setOnClickListener(this)
 
 
+
+    }
+
+    private fun realtimeChangeInfo(){
         // 사용시간 실시간 변경
         Log.d("스레드", "스레드 시작")
         thread(start = true) {
@@ -312,16 +312,23 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
             }
         }
     }
-
     override fun onStart() {
         super.onStart()
         threadFlag = true
+        realtimeChangeInfo()
         mapView.onStart()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        threadFlag = true
+        realtimeChangeInfo()
     }
 
     override fun onResume() {
         super.onResume()
         threadFlag = true
+        realtimeChangeInfo()
         mapView.onResume()
     }
 
