@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp">
+    android:paddingTop="16dp"
+    android:paddingRight="16dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="67dp"
         android:layout_marginBottom="16dp"
+        android:fontFamily="@font/font"
         android:gravity="center"
         android:text="\nL 0 G I N"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/font"/>
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -36,49 +37,49 @@
         <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/font"
             android:text="ID "
             android:textColor="#FFFFFF"
             android:textSize="18dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/font"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/ID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
-            android:text="test@test.com"
+            android:fontFamily="@font/font"
             android:hint="ID"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/font"/>
+            android:text="test@test.com"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_gravity="center">
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/font"
             android:text="PW "
             android:textColor="#FFFFFF"
             android:textSize="18dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/font"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/PW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#cf6679"
+            android:fontFamily="@font/font"
             android:hint="PW"
             android:text="test1234"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/font"/>
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 
@@ -93,10 +94,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:text="로   그   인"
-        android:textColor="#ffffff"
         android:background="@drawable/btn_login"
-        android:fontFamily="@font/font"/>
+        android:fontFamily="@font/font"
+        android:text="로   그   인"
+        android:textColor="#ffffff" />
 
 
     <LinearLayout
@@ -111,34 +112,29 @@
             android:id="@+id/sign_up"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_gravity="left"
+            android:gravity="center"
             android:text="회원가입 "
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/manager_mode"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_gravity="right"
+            android:gravity="center"
             android:text="관리자 모드"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="맵 확인용(개발완료 후 지울거임)"/>
-
 
 </LinearLayout>
 

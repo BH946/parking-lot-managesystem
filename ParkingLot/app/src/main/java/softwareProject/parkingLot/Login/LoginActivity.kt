@@ -40,11 +40,6 @@ class LoginActivity:AppCompatActivity() {
             val intent=Intent(applicationContext, HostLoginActivity::class.java)
             startActivity(intent)
         }
-
-        // test용 맵 버튼 => 테스트할때 로그인해서 맵넘기기 귀찮아서
-        // test id : abc@naver.com
-        // test pw : 123456
-        testMapButton()
     }
     //뒤로가기버튼 클릭
     override fun onBackPressed() {
@@ -90,13 +85,6 @@ class LoginActivity:AppCompatActivity() {
         return findViewById<EditText>(R.id.PW).text.toString()
     }
 
-    // test용 버튼
-    private fun testMapButton() {
-        btn1.setOnClickListener {
-            val intent = Intent(applicationContext, MapActivity::class.java)
-            startActivity(intent)
-        }
-    }
 }
 
 
