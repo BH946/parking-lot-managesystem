@@ -181,7 +181,7 @@ class ReservationActivity : AppCompatActivity() {
                     parkingDB.child("Parking").child(parking.id.toString()).child("counting").setValue(counting + 1)
 
                     // 첫 화면으로 돌아감
-                    Toast.makeText(this,"예약되었습니다",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "예약되었습니다", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MapActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)

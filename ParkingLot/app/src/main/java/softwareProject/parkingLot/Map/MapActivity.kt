@@ -269,11 +269,9 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
 
     private fun realtimeChangeInfo(){
         // 사용시간 실시간 변경
-        Log.d("스레드", "스레드 시작")
         thread(start = true) {
             while (threadFlag) {
                 runOnUiThread {
-                    Log.d("스레드", "스레드 작동중")
                     // realtime db -> 없으면 알아서 생성
                     val parkingDB = FirebaseDatabase.getInstance().getReference().child("user")
                     parkingDB.addListenerForSingleValueEvent(object : ValueEventListener {

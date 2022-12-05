@@ -18,10 +18,14 @@ import com.naver.maps.map.util.MarkerIcons
 
 
 class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
+    // DB 객체
     private val database = FirebaseDatabase.getInstance()
     private val parkingDB = database.reference
+
+    // intent data
     private lateinit var parking: Parking
 
+    // 뷰 객체
     lateinit var parking_road: TextView
     lateinit var parking_tel: TextView
 
@@ -34,6 +38,7 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
 
     lateinit var btn_showReservationActivity: Button
 
+    // Naver Map
     private lateinit var naverMap: NaverMap
     private val mapView: MapView by lazy {
         findViewById<MapView>(R.id.mapView)
@@ -51,6 +56,7 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView.getMapAsync(this)
     }
 
+    // 뷰와 객체 연결
     private fun initView() {
         parking = intent.getSerializableExtra("parking") as Parking
 
@@ -67,6 +73,7 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         btn_showReservationActivity = findViewById(R.id.showReservation)
     }
 
+    // 뷰 텍스트 초기화
     private fun setViewText() {
         title = parking.name
         parking_road.text = parking.road
@@ -80,17 +87,21 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         closeTime_holiday.text = parking.holidayEndTime
     }
 
+    // 리스너 설정
     fun setListener() {
+        // 예약버튼 클릭 시
         btn_showReservationActivity.setOnClickListener {
             val intent = Intent(this, ReservationActivity::class.java)
             intent.putExtra("parking", parking)
             startActivity(intent)
         }
+        // 주차장 전화번호 클릭 시
         parking_tel.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:${parking.tel}")
             startActivity(intent)
         }
+        // DB 데이터 받아올 때
         parkingDB.get().addOnSuccessListener {
             var parkingIsNull = it.child("Parking").child(parking.id.toString()).child("counting").value
             var counting: Int
