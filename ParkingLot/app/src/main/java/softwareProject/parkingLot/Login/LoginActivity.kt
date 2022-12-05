@@ -34,11 +34,13 @@ class LoginActivity:AppCompatActivity() {
         sign_up.setOnClickListener{
             val intent=Intent(applicationContext, SignUpActivity::class.java)
             startActivity(intent)
+            finish()
         }
         val manager_mode = findViewById<View>(R.id.manager_mode) as TextView
         manager_mode.setOnClickListener{
             val intent=Intent(applicationContext, HostLoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         // test용 맵 버튼 => 테스트할때 로그인해서 맵넘기기 귀찮아서

@@ -85,6 +85,7 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
             val intent = Intent(this, ReservationActivity::class.java)
             intent.putExtra("parking", parking)
             startActivity(intent)
+            finish()
         }
         parking_tel.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)

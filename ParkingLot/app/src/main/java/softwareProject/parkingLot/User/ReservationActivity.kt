@@ -191,5 +191,8 @@ class ReservationActivity : AppCompatActivity() {
 
 
     }
-
+    //뒤로가기버튼 클릭
+    override fun onBackPressed() {
+        finish() //액티비티 종료
+    }
 }

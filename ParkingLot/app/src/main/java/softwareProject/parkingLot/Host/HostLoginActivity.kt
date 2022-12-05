@@ -56,6 +56,7 @@ class HostLoginActivity : AppCompatActivity() {
                                 intent.putExtra("reservation_user", reservation_user)
                             }
                             startActivity(intent)
+                            finish()
                         }
                     }
 

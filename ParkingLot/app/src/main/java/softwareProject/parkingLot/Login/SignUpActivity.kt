@@ -15,7 +15,8 @@ import com.google.firebase.database.FirebaseDatabase
 import softwareProject.parkingLot.R
 import softwareProject.parkingLot.User.UserDB
 
-class SignUpActivity : AppCompatActivity() {
+class
+SignUpActivity : AppCompatActivity() {
     private lateinit var btn : Button
     private lateinit var auth : FirebaseAuth
     private lateinit var dbRef : DatabaseReference
@@ -52,6 +53,7 @@ class SignUpActivity : AppCompatActivity() {
                             Toast.makeText(this, "회원가입 완료되었습니다", Toast.LENGTH_SHORT).show()
                             startActivity(intent)
                             addUserToDatabase(name, email, auth.currentUser?.uid!!)
+                            finish()
 
                         } else {
                             Toast.makeText(this, "다시 시도해주세요", Toast.LENGTH_SHORT).show()

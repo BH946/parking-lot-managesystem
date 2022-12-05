@@ -358,5 +358,8 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 
-
+    //뒤로가기버튼 클릭
+    override fun onBackPressed() {
+        finish() //액티비티 종료
+    }
 }

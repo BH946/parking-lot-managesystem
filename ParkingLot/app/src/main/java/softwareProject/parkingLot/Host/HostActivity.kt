@@ -1,14 +1,22 @@
 package softwareProject.parkingLot.Host
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import com.google.firebase.database.*
+import softwareProject.parkingLot.Login.LoginActivity
+import softwareProject.parkingLot.Login.SignUpActivity
 import softwareProject.parkingLot.R
 import java.util.*
 import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
 class HostActivity : AppCompatActivity() {
     val database = FirebaseDatabase.getInstance()
@@ -119,5 +127,22 @@ class HostActivity : AppCompatActivity() {
 
         //parkingDB.child("Parking").child(number.toString()).child("counting").setValue(resUserNum.toString())
 
+    }
+    //뒤로가기버튼 클릭
+    override fun onBackPressed() {
+        //finish() /* 액티비티 종료 */
+        // 해당 앱의 루트 액티비티를 종료
+// (API  16미만은 ActivityCompat.finishAffinity())
+        ActivityCompat.finishAffinity(this)
+
+// 현재 작업중인 쓰레드가 다 종료되면, 종료 시키라는 명령어
+        System.runFinalization()
+
+        //재시작
+        val intent=Intent(applicationContext,  LoginActivity::class.java)
+        startActivity(intent)
+        Toast.makeText(this, "앱을 종료합니다.", Toast.LENGTH_SHORT).show()
+// 현재 액티비티를 종료시킨다.
+        exitProcess(0)
     }
 }
