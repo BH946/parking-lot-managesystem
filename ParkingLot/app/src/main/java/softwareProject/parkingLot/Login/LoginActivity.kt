@@ -19,9 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginActivity:AppCompatActivity() {
     private lateinit var btn : Button
     private lateinit var auth : FirebaseAuth
-    private val btn1 : Button by lazy {
-        findViewById<Button>(R.id.btn1)
-    }
+    
     var mBackWait:Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
