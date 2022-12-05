@@ -108,9 +108,10 @@ class ParkingInfoActivity : AppCompatActivity(), OnMapReadyCallback {
                 size = it.child("Parking").child(parking.id.toString()).child("size").value.toString().toInt()
             }
             if (counting >= size) {
+                btn_showReservationActivity.text = "예약 가능한 자리가 없습니다"
                 btn_showReservationActivity.isClickable = false
                 btn_showReservationActivity.setBackgroundResource(R.drawable.btn_host2)
-                Toast.makeText(this, "예약 가능한 자리가 없습니다", Toast.LENGTH_LONG).show()
+
             }
         }
     }

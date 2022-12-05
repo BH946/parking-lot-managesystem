@@ -14,13 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkingLot">
-        <activity android:name=".Host.HostLoginActivity"></activity>
-        <activity android:name="softwareProject.parkingLot.Map.MapActivity"/>
-        <activity android:name="softwareProject.parkingLot.User.ReservationActivity"/>
-        <activity android:name="softwareProject.parkingLot.Login.LoginActivity"/>
         <activity android:name="softwareProject.parkingLot.Host.HostActivity"/>
+        <activity android:name="softwareProject.parkingLot.Host.HostLoginActivity"/>
+        <activity android:name="softwareProject.parkingLot.Login.LoginActivity"/>
         <activity android:name="softwareProject.parkingLot.Login.SignUpActivity"/>
+        <activity android:name="softwareProject.parkingLot.Map.MapActivity"/>
         <activity android:name="softwareProject.parkingLot.User.ParkingInfoActivity"/>
+        <activity android:name="softwareProject.parkingLot.User.ReservationActivity"/>
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

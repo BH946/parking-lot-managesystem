@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:orientation="vertical">
 
             <com.naver.maps.map.MapView
@@ -57,6 +57,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/font"
                         android:letterSpacing="0.05"
+                        android:lineSpacingExtra ="5dp"
                         android:paddingLeft="30dp"
                         android:text="부산광역시 사하구 낙동대로"
                         android:textColor="@color/white"
@@ -287,8 +288,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
 
         <android.widget.Button
             android:id="@+id/showReservation"
