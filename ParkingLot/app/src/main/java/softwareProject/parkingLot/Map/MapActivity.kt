@@ -15,6 +15,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
+import com.naver.maps.map.widget.LocationButtonView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -211,9 +212,11 @@ class MapActivity : TabActivity(), OnMapReadyCallback, Overlay.OnClickListener, 
         // default : 동아대 위치
         val cameraUpdate = CameraUpdate.scrollTo(LatLng(35.116712, 128.968449))
         naverMap.moveCamera(cameraUpdate)
-        // 현위치 버튼(권한 필요)
-        val uiSetting = naverMap.uiSettings
-        uiSetting.isLocationButtonEnabled = true
+        // 현위치 버튼(권한 필요) ->
+//        val uiSetting = naverMap.uiSettings
+//        uiSetting.isLocationButtonEnabled = false
+        val locationButtonView = findViewById<LocationButtonView>(R.id.location)
+        locationButtonView.map = naverMap
         // 위치 정보 받아옴(해당 함수 내부적으로 권한 확인도 포함)
         locationSource = FusedLocationSource(this@MapActivity, LOCATION_PERMISSION_REQUEST_CODE)
         naverMap.locationSource = locationSource
