@@ -22,7 +22,6 @@ class HostLoginActivity : AppCompatActivity() {
         initLoginButton()
 
         dbRef = FirebaseDatabase.getInstance().reference
-
     }
 
     private fun initLoginButton() {

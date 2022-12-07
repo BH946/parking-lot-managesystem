@@ -88,7 +88,6 @@ class HostActivity : AppCompatActivity() {
                     val minute = cal[Calendar.MINUTE]
                     timeView.text = year.toString() + "년 " + month + "월 " + day + "일 " + hour + "시 " + minute + "분"
                 }
-                threadFlag=false
                 Thread.sleep(1000)
             }
         }
@@ -100,14 +99,10 @@ class HostActivity : AppCompatActivity() {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.child("counting").value != null) {
-                        numberRest.text =
-                            snapshot.child("counting").value.toString()
-                        numberAll.text =
-                            snapshot.child("size").value.toString()
-                        resUserNum =
-                            snapshot.child("counting").value.toString().toInt()
-                        allUserNum =
-                            snapshot.child("size").value.toString().toInt()
+                        numberRest.text = snapshot.child("counting").value.toString()
+                        numberAll.text = snapshot.child("size").value.toString()
+                        resUserNum = snapshot.child("counting").value.toString().toInt()
+                        allUserNum = snapshot.child("size").value.toString().toInt()
                     }
                 }
 
@@ -168,17 +163,17 @@ class HostActivity : AppCompatActivity() {
     override fun onBackPressed() {
         //finish() /* 액티비티 종료 */
         // 해당 앱의 루트 액티비티를 종료
-// (API  16미만은 ActivityCompat.finishAffinity())
+        // (API  16미만은 ActivityCompat.finishAffinity())
         ActivityCompat.finishAffinity(this)
 
-// 현재 작업중인 쓰레드가 다 종료되면, 종료 시키라는 명령어
+        // 현재 작업중인 쓰레드가 다 종료되면, 종료 시키라는 명령어
         System.runFinalization()
 
         //재시작
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
         Toast.makeText(this, "관리자 모드가 종료되었습니다.", Toast.LENGTH_SHORT).show()
-// 현재 액티비티를 종료시킨다.
+        // 현재 액티비티를 종료시킨다.
         exitProcess(0)
     }
 }
