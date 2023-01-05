@@ -1,6 +1,20 @@
 # parking_lot_managesystem
 
-test..
+![image-20230105171320013](.\images\image-20230105171320013.png)
+
+![image-20230105171353956](.\images\image-20230105171353956.png)
+
+![image-20230105171426114](.\images\image-20230105171426114.png)
+
+![image-20230105171501222](.\images\image-20230105171501222.png)
+
+![image-20230105171443082](.\images\image-20230105171443082.png)
+
+![image-20230105171524847](.\images\image-20230105171524847.png)
+
+![image-20230105171554538](.\images\image-20230105171554538.png)
+
+![image-20230105171612802](.\images\image-20230105171612802.png)
 
 <br>
 
@@ -48,6 +62,18 @@ dependencies {
 AVD는 API24, pixel2 구동
 안드로이드 스튜디오 4.1.2
 ```
+
+<br>
+
+## Architecture Document
+
+![image-20230105171219152](.\images\image-20230105171219152.png)
+
+<br>
+
+## DB Structure
+
+![firebase realtime database 구조](.\images\firebase realtime database 구조.png)
 
 <br>
 
@@ -105,7 +131,6 @@ AVD는 API24, pixel2 구동
   * 호스트 로그인 화면을 구성
   * [`/layout/activity_host.xml`](./ParkingLot/app/src/main/res/layout/activity_host.xml)
     * 호스트(관리자) 모드 화면을 구성
-
 * [`/values/api_key.xml`](./ParkingLot/app/src/main/res/values/api_key.xml)
   * 네이버 맵, 공공 데이터 API 키로 구성
 * [`/build.gradle`](./ParkingLot/app/build.gradle)
@@ -114,3 +139,5 @@ AVD는 API24, pixel2 구동
   * multidex
   * retrofit
   * gson
+
+<br>
