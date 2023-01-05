@@ -1,6 +1,6 @@
 # parking_lot_managesystem
 
-![image-20230105171320013](\images\image-20230105171320013.png)
+![image-20230105171320013](..\images\image-20230105171320013.png)
 
 ![image-20230105171353956](.\images\image-20230105171353956.png)
 
