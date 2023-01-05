@@ -1,20 +1,20 @@
 # parking_lot_managesystem
 
-![image-20230105171320013](.\images\image-20230105171320013.png)
+<img src=".\images\image-20230105171320013.png" alt="image-20220824171926573" />
 
-![image-20230105171353956](.\images\image-20230105171353956.png)
+<img src=".\images\image-20230105171353956.png" alt="image-20220824171926573" />
 
-![image-20230105171426114](.\images\image-20230105171426114.png)
+<img src=".\images\image-20230105171426114.png" alt="image-20220824171926573" />
 
-![image-20230105171501222](.\images\image-20230105171501222.png)
+<img src=".\images\image-20230105171501222.png" alt="image-20220824171926573" />
 
-![image-20230105171443082](.\images\image-20230105171443082.png)
+<img src=".\images\image-20230105171443082.png" alt="image-20220824171926573" />
 
-![image-20230105171524847](.\images\image-20230105171524847.png)
+<img src=".\images\image-20230105171524847.png" alt="image-20220824171926573" />
 
-![image-20230105171554538](.\images\image-20230105171554538.png)
+<img src=".\images\image-20230105171554538.png" alt="image-20220824171926573" />
 
-![image-20230105171612802](.\images\image-20230105171612802.png)
+<img src=".\images\image-20230105171612802.png" alt="image-20220824171926573" />
 
 <br>
 
@@ -67,13 +67,13 @@ AVD는 API24, pixel2 구동
 
 ## Architecture Document
 
-![image-20230105171219152](.\images\image-20230105171219152.png)
+<img src=".\images\image-20230105171219152.png" alt="image-20220824171926573" />
 
 <br>
 
 ## DB Structure
 
-![firebase realtime database 구조](.\images\firebase realtime database 구조.png)
+<img src=".\images\firebase realtime database 구조.png" alt="image-20220824171926573" />
 
 <br>
 
